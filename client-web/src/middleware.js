@@ -2,6 +2,7 @@ import agent from './agent';
 import { ASYNC_START, ASYNC_END, LOGIN, LOGOUT, REGISTER } from './constants/actionTypes';
 
 const promiseMiddleware = store => next => action => {
+  // 如果是Promise请求，就调用then方法，并且状态变为正在同步
   if (isPromise(action.payload)) {
     store.dispatch({ type: ASYNC_START, subtype: action.type });
 
@@ -16,15 +17,16 @@ const promiseMiddleware = store => next => action => {
         console.log('ERROR', error);
         action.error = true;
         action.payload = error.response.body;
+        store.dispatch({ type: ASYNC_END, promise: action.payload });
         store.dispatch(action);
       }
     );
     return;
   }
+  // 其它action就直接跳过
   next(action);
 };
 
-/** @namespace action.payload.user.token */
 const localStorageMiddleware = store => next => action => {
   if (action.type === REGISTER || action.type === LOGIN) {
     if (!action.error) {

@@ -47,6 +47,7 @@ const Message = {
 };
 
 const Auth = {
+  current: () => requests.get('/user'),
   login: (username, password) => requests.post('/auth/login', { username, password }),
   register: (username, password) => requests.post('/users', { username, password })
 };
