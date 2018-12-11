@@ -1,10 +1,11 @@
 package com.ecnu.testcourse.Timeline.api;
 
-import com.ecnu.testcourse.Timeline.api.exception.InvalidRequestException;
+import static com.ecnu.testcourse.Timeline.utils.JsonHelper.object;
+
 import com.ecnu.testcourse.Timeline.models.message.Message;
 import com.ecnu.testcourse.Timeline.models.message.MessageRepository;
+import com.ecnu.testcourse.Timeline.utils.ValidationHandler;
 import com.fasterxml.jackson.annotation.JsonRootName;
-import java.util.HashMap;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,30 +31,25 @@ public class MessageApi {
 
   @RequestMapping(method = RequestMethod.GET)
   public ResponseEntity getMessages() {
-
-    return ResponseEntity.ok(new HashMap<String, Object>() {{
-      put("messages", messageRepository.findAll());
-    }});
+    return ResponseEntity.ok(object("messages", messageRepository.findAll()));
   }
 
   @RequestMapping(method = RequestMethod.POST)
   public ResponseEntity createMessage(@Valid @RequestBody NewMessageParam newMessageParam,
       BindingResult bindingResult) {
     if (bindingResult.hasErrors()) {
-      throw new InvalidRequestException(bindingResult);
+      return ResponseEntity.status(422).body(ValidationHandler.serialize(bindingResult));
     }
     Message message = new Message(newMessageParam.getBody());
     messageRepository.save(message);
-    return ResponseEntity.ok(new HashMap<String, Object>() {{
-      put("message", message);
-    }});
+    return ResponseEntity.ok(object("message", message));
   }
 }
 
 @JsonRootName("message")
 class NewMessageParam {
 
-  @NotBlank(message = "message body can't be empty")
+  @NotBlank(message = "can't be empty")
   private String body;
 
   public String getBody() {
