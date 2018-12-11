@@ -12,31 +12,44 @@ public class Message {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private long id;
+  private String body;
+  private String createdAt;
+  private String updatedAt;
 
-  private String time;
-  private String content;
 
   public Message() {
   }
 
-  public Message(String content) {
-    this.time = new DateTime().toString();
-    this.content = content;
+  public Message(String body) {
+    this.createdAt = new DateTime().toString();
+    this.body = body;
   }
 
-  public String getTime() {
-    return time;
+  public long getId() {
+    return id;
   }
 
-  public void setTime(String time) {
-    this.time = time;
+  public String getCreatedAt() {
+    return createdAt;
   }
 
-  public String getContent() {
-    return content;
+  public void setCreatedAt(String createdAt) {
+    this.createdAt = createdAt;
   }
 
-  public void setContent(String content) {
-    this.content = content;
+  public String getUpdatedAt() {
+    return updatedAt;
+  }
+
+  public void setUpdatedAt(String updatedAt) {
+    this.updatedAt = updatedAt;
+  }
+
+  public String getBody() {
+    return body;
+  }
+
+  public void setBody(String body) {
+    this.body = body;
   }
 }

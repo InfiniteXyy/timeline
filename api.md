@@ -53,7 +53,7 @@ Make sure the right content type like `Content-Type: application/json; charset=u
 
 ```JSON
 {
-  "message":[{
+  "messages":[{
     "id": "sdfwer134234ew",
     "body": "It was fun.",
     "createdAt": "2018-12-11T11:04:34.359Z",

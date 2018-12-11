@@ -1,5 +1,6 @@
 package com.ecnu.testcourse.Timeline.api;
 
+import com.ecnu.testcourse.Timeline.api.exception.InvalidRequestException;
 import com.ecnu.testcourse.Timeline.models.message.Message;
 import com.ecnu.testcourse.Timeline.models.message.MessageRepository;
 import com.fasterxml.jackson.annotation.JsonRootName;
@@ -8,6 +9,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -28,34 +30,33 @@ public class MessageApi {
 
   @RequestMapping(method = RequestMethod.GET)
   public ResponseEntity getMessages() {
+
     return ResponseEntity.ok(new HashMap<String, Object>() {{
-      put("data", messageRepository.findAll());
+      put("messages", messageRepository.findAll());
     }});
   }
 
   @RequestMapping(method = RequestMethod.POST)
-  public ResponseEntity createMessage(@Valid @RequestBody NewMessageParam newMessageParam) {
-    Message message = new Message(newMessageParam.getContent());
+  public ResponseEntity createMessage(@Valid @RequestBody NewMessageParam newMessageParam,
+      BindingResult bindingResult) {
+    if (bindingResult.hasErrors()) {
+      throw new InvalidRequestException(bindingResult);
+    }
+    Message message = new Message(newMessageParam.getBody());
     messageRepository.save(message);
     return ResponseEntity.ok(new HashMap<String, Object>() {{
       put("message", message);
     }});
   }
-
-
 }
 
 @JsonRootName("message")
 class NewMessageParam {
 
-  @NotBlank(message = "message content can't be empty")
-  private String content;
+  @NotBlank(message = "message body can't be empty")
+  private String body;
 
-  public String getContent() {
-    return content;
-  }
-
-  public void setContent(String content) {
-    this.content = content;
+  public String getBody() {
+    return body;
   }
 }
