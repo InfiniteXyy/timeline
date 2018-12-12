@@ -1,7 +1,8 @@
 import React from 'react';
 import moment from 'moment';
 import Image from 'react-bootstrap/lib/Image';
-
+/** @namespace i.createdAt */
+/** @namespace i.author */
 const Message = props => {
   let i = props.item;
   return (
@@ -12,9 +13,9 @@ const Message = props => {
       />
       <div className="right-container">
         <span>
-          <strong>{i.user.username}</strong> · {moment(i.time).fromNow()}
+          <strong>{i.author.username}</strong> · {moment(i.createdAt).fromNow()}
         </span>
-        <p>{i.content}</p>
+        <p>{i.body}</p>
       </div>
     </div>
   );

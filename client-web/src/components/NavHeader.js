@@ -4,28 +4,13 @@ import Container from 'react-bootstrap/lib/Container';
 import Image from 'react-bootstrap/lib/Image';
 import Dropdown from 'react-bootstrap/lib/Dropdown';
 import { connect } from 'react-redux';
-import { LOGIN, LOGOUT } from '../constants/actionTypes';
-import agent from '../agent';
+import { CLOSE_LOGIN_DIALOG, LOGOUT, OPEN_LOGIN_DIALOG } from '../constants/actionTypes';
 import Login from './Login';
 import Modal from 'react-bootstrap/lib/Modal';
+import ModalHeader from 'react-bootstrap/lib/ModalHeader';
+import CustomToggle from './common/CustomToggle';
 
 class NavHeader extends React.Component {
-  constructor(props) {
-    super(props);
-    this.handleLogin = () => {
-      this.setState({ loginModalShow: true });
-    };
-    this.handleClose = () => {
-      this.setState({ loginModalShow: false });
-    };
-    this.state = {
-      loginModalShow: false
-    };
-    this.onSubmit = (username, password) => {
-      console.log(username, password);
-    };
-  }
-
   render() {
     let user = this.props.currentUser;
     let avatarUrl = user
@@ -44,13 +29,28 @@ class NavHeader extends React.Component {
             </Dropdown>
           </Navbar.Collapse>
         </Container>
-        <Modal show={this.state.loginModalShow} onHide={this.handleClose}>
-          <Login handleClose={this.handleClose} />
+        <Modal show={this.props.loginDialogShow} onHide={this.props.onCloseLoginDialog}>
+          <ModalHeader className={'modal-header'}>
+            <button
+              type="button"
+              className="close"
+              data-dismiss="modal"
+              aria-label="Close"
+              onClick={this.props.onCloseLoginDialog}
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </ModalHeader>
+          <Login handleClose={this.props.onCloseLoginDialog} />
         </Modal>
       </Navbar>
     );
   }
 
+  /**
+   * @param user
+   * @returns Dropdown Menu View for logged in users
+   */
   renderLoggedInMenu = user => {
     let username = user.username;
     return (
@@ -77,16 +77,19 @@ class NavHeader extends React.Component {
     );
   };
 
+  /**
+   * @returns Plain Dropdown Menu View
+   */
   renderMenu = () => {
     return (
       <Dropdown.Menu>
-        <Dropdown.Item onClick={this.handleLogin}>
+        <Dropdown.Item onClick={this.props.onOpenLoginDialog}>
           <span>
             <i className="fa fa-sign-in fa-fw" />
             登录
           </span>
         </Dropdown.Item>
-        <Dropdown.Item onClick={this.props.onClickLogin}>
+        <Dropdown.Item onClick={this.props.onOpenLoginDialog}>
           <span>
             <i className="fa fa-vcard-o fa-fw" />
             注册
@@ -97,28 +100,15 @@ class NavHeader extends React.Component {
   };
 }
 
-class CustomToggle extends React.Component {
-  constructor(props) {
-    super(props);
-    this.handleClick = this.handleClick.bind(this);
-  }
-
-  handleClick(e) {
-    e.preventDefault();
-    this.props.onClick(e);
-  }
-
-  render() {
-    return <div onClick={this.handleClick}>{this.props.children}</div>;
-  }
-}
-
 const mapStateToProps = state => ({
-  currentUser: state.common.currentUser
+  currentUser: state.common.currentUser,
+  loginDialogShow: state.home.loginDialogShow
 });
 
 const mapDispatchToProps = dispatch => ({
-  onClickLogout: () => dispatch({ type: LOGOUT })
+  onClickLogout: () => dispatch({ type: LOGOUT }),
+  onOpenLoginDialog: () => dispatch({ type: OPEN_LOGIN_DIALOG }),
+  onCloseLoginDialog: () => dispatch({ type: CLOSE_LOGIN_DIALOG })
 });
 
 export default connect(

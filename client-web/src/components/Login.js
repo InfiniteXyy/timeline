@@ -7,18 +7,17 @@ class Login extends React.Component {
     super(props);
     this.state = {
       password: '',
-      username: ''
+      email: ''
     };
     this.setPassword = ev => {
       this.setState({ password: ev.target.value });
     };
-    this.setUsername = ev => {
-      this.setState({ username: ev.target.value });
+    this.setEmail = ev => {
+      this.setState({ email: ev.target.value });
     };
     this.handleSubmit = ev => {
       ev.preventDefault();
-      props.onSubmitLogin(this.state.username, this.state.password);
-      props.handleClose();
+      props.onSubmitLogin(this.state.email, this.state.password);
     };
   }
 
@@ -33,11 +32,11 @@ class Login extends React.Component {
           <form id="Login">
             <div className="form-group">
               <input
-                type="text"
+                type="email"
                 className="form-control"
                 id="inputEmail"
                 placeholder="邮箱地址"
-                onChange={this.setUsername}
+                onChange={this.setEmail}
               />
             </div>
 
@@ -51,10 +50,10 @@ class Login extends React.Component {
               />
             </div>
             <div className="forgot">
-              <a href="">忘记密码？</a>
+              <p>忘记密码？</p>
             </div>
             <button type="submit" className="btn btn-primary">
-              登录
+              {this.props.inProgress ? <div className="loader " /> : <span>登录</span>}
             </button>
           </form>
         </div>
@@ -62,11 +61,16 @@ class Login extends React.Component {
     );
   }
 }
+
+const mapStateToProps = state => ({
+  inProgress: state.home.inProgress
+});
+
 const mapDispatchToProps = dispatch => ({
-  onSubmitLogin: (username, password) => dispatch({ type: LOGIN, payload: agent.Auth.login(username, password) })
+  onSubmitLogin: (email, password) => dispatch({ type: LOGIN, payload: agent.Auth.login(email, password) })
 });
 
 export default connect(
-  () => ({}),
+  mapStateToProps,
   mapDispatchToProps
 )(Login);

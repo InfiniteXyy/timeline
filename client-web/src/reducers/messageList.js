@@ -7,7 +7,7 @@ const defaultState = {
 export default (state = defaultState, action) => {
   switch (action.type) {
     case HOME_PAGE_LOADED:
-      return { ...state, messages: action.payload.data };
+      return { ...state, messages: action.payload.messages };
     case HOME_PAGE_UNLOADED:
       return {};
     case ASYNC_START:

@@ -12,7 +12,7 @@ let token = null;
 
 const tokenPlugin = req => {
   if (token) {
-    req.set('authorization', `Token ${token}`);
+    req.set('authorization', `Bearer ${token}`);
   }
 };
 
@@ -42,19 +42,25 @@ const requests = {
 const Message = {
   get: () => requests.get('/messages'),
   delete: id => requests.del(`/messages/${encode(id)}`),
-  update: (id, content, time) => requests.put('/messages', { id, content, time }),
-  add: (content, time) => requests.post('/messages', { content, time })
+  update: (id, body) => requests.put(`/messages/${encode(id)}`, { message: { body } }),
+  add: body => requests.post('/messages/', { message: { body } })
 };
 
 const Auth = {
   current: () => requests.get('/user'),
-  login: (username, password) => requests.post('/auth/login', { username, password }),
-  register: (username, password) => requests.post('/users', { username, password })
+  save: user => requests.put('/user', { user }),
+  login: (email, password) => requests.post('/users/login', { user: { email, password } }),
+  register: (email, username, password) => requests.post('/users', { user: { email, username, password } })
+};
+
+const Profile = {
+  get: username => requests.get(`/profiles/${username}`)
 };
 
 export default {
   Message,
   Auth,
+  Profile,
   setToken: _token => {
     token = _token;
   }

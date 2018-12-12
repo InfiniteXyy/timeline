@@ -12,11 +12,9 @@ const MessageList = props => {
 
   return (
     <div>
-      {props.messages
-        .sort((a, b) => b.time - a.time)
-        .map(i => (
-          <Message item={i} key={i.id} />
-        ))}
+      {props.messages.map(i => (
+        <Message item={i} key={i.createdAt} />
+      ))}
     </div>
   );
 };

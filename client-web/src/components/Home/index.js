@@ -21,11 +21,11 @@ const mapDispatchToProps = dispatch => ({
 class Home extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { textField: '' };
+    this.state = { messageBody: '' };
 
-    this.updateMessage = ev => {
+    this.updateBody = ev => {
       const state = this.state;
-      const newState = Object.assign({}, state, { textField: ev.target.value });
+      const newState = Object.assign({}, state, { messageBody: ev.target.value });
       this.setState(newState);
     };
 
@@ -35,9 +35,9 @@ class Home extends React.Component {
         alert('请先登录');
         return;
       }
-      this.props.onAddMessage(agent.Message.add(this.state.textField, new Date().getTime()));
+      this.props.onAddMessage(agent.Message.add(this.state.messageBody));
       this.setState({
-        textField: ''
+        messageBody: ''
       });
     };
 
@@ -48,7 +48,7 @@ class Home extends React.Component {
   }
 
   componentWillMount() {
-    this.props.onLoad(agent.Message.get());
+    this.refreshData();
   }
 
   componentWillUnmount() {
@@ -64,8 +64,8 @@ class Home extends React.Component {
             <FormControl
               placeholder="有什么新鲜事？"
               aria-label="message-field"
-              onChange={this.updateMessage}
-              value={this.state.textField}
+              onChange={this.updateBody}
+              value={this.state.messageBody}
             />
             <InputGroup.Append>
               <Button variant="light" className="btn btn-outline-secondary submit-button" onClick={this.handleSubmit}>
