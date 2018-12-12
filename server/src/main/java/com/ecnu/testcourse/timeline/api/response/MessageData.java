@@ -1,7 +1,7 @@
-package com.ecnu.testcourse.Timeline.api.response;
+package com.ecnu.testcourse.timeline.api.response;
 
-import com.ecnu.testcourse.Timeline.models.message.Message;
-import com.ecnu.testcourse.Timeline.models.user.User;
+import com.ecnu.testcourse.timeline.models.message.Message;
+import com.ecnu.testcourse.timeline.models.user.User;
 import java.util.HashMap;
 import java.util.Map;
 

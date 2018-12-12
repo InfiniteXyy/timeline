@@ -1,9 +1,9 @@
-package com.ecnu.testcourse.Timeline.api;
+package com.ecnu.testcourse.timeline.api;
 
-import com.ecnu.testcourse.Timeline.models.user.User;
-import com.ecnu.testcourse.Timeline.models.user.UserRepository;
-import com.ecnu.testcourse.Timeline.api.response.ProfileData;
-import com.ecnu.testcourse.Timeline.utils.ValidationHandler;
+import com.ecnu.testcourse.timeline.models.user.User;
+import com.ecnu.testcourse.timeline.models.user.UserRepository;
+import com.ecnu.testcourse.timeline.api.response.ProfileData;
+import com.ecnu.testcourse.timeline.utils.ValidationHandler;
 import java.util.HashMap;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,7 +1,7 @@
-package com.ecnu.testcourse.Timeline.service;
+package com.ecnu.testcourse.timeline.service;
 
-import com.ecnu.testcourse.Timeline.models.user.EncryptService;
-import com.ecnu.testcourse.Timeline.utils.Encrypt;
+import com.ecnu.testcourse.timeline.models.user.EncryptService;
+import com.ecnu.testcourse.timeline.utils.Encrypt;
 import java.nio.charset.StandardCharsets;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;

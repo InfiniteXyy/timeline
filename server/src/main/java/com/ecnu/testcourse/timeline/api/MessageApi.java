@@ -1,14 +1,14 @@
-package com.ecnu.testcourse.Timeline.api;
+package com.ecnu.testcourse.timeline.api;
 
-import static com.ecnu.testcourse.Timeline.utils.JsonHelper.object;
+import static com.ecnu.testcourse.timeline.utils.JsonHelper.object;
 
-import com.ecnu.testcourse.Timeline.api.response.MessageData;
-import com.ecnu.testcourse.Timeline.models.message.Message;
-import com.ecnu.testcourse.Timeline.models.message.MessageRepository;
-import com.ecnu.testcourse.Timeline.models.user.User;
-import com.ecnu.testcourse.Timeline.models.user.UserRepository;
-import com.ecnu.testcourse.Timeline.service.Auth;
-import com.ecnu.testcourse.Timeline.utils.ValidationHandler;
+import com.ecnu.testcourse.timeline.api.response.MessageData;
+import com.ecnu.testcourse.timeline.models.message.Message;
+import com.ecnu.testcourse.timeline.models.message.MessageRepository;
+import com.ecnu.testcourse.timeline.models.user.User;
+import com.ecnu.testcourse.timeline.models.user.UserRepository;
+import com.ecnu.testcourse.timeline.service.Auth;
+import com.ecnu.testcourse.timeline.utils.ValidationHandler;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import java.util.Optional;
 import javax.validation.Valid;

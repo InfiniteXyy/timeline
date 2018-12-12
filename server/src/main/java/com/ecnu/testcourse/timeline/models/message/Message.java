@@ -1,4 +1,4 @@
-package com.ecnu.testcourse.Timeline.models.message;
+package com.ecnu.testcourse.timeline.models.message;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

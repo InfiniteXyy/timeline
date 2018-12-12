@@ -1,8 +1,8 @@
-package com.ecnu.testcourse.Timeline.service;
+package com.ecnu.testcourse.timeline.service;
 
-import com.ecnu.testcourse.Timeline.models.user.JwtService;
-import com.ecnu.testcourse.Timeline.models.user.User;
-import com.ecnu.testcourse.Timeline.utils.Encrypt;
+import com.ecnu.testcourse.timeline.models.user.JwtService;
+import com.ecnu.testcourse.timeline.models.user.User;
+import com.ecnu.testcourse.timeline.utils.Encrypt;
 import org.springframework.stereotype.Service;
 
 @Service

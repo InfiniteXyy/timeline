@@ -1,4 +1,4 @@
-package com.ecnu.testcourse.Timeline.models.user;
+package com.ecnu.testcourse.timeline.models.user;
 
 public interface EncryptService {
 

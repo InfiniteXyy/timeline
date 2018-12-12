@@ -1,4 +1,4 @@
-package com.ecnu.testcourse.Timeline.models.user;
+package com.ecnu.testcourse.timeline.models.user;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

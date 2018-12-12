@@ -1,4 +1,4 @@
-package com.ecnu.testcourse.Timeline;
+package com.ecnu.testcourse.timeline;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -1,4 +1,4 @@
-package com.ecnu.testcourse.Timeline.utils;
+package com.ecnu.testcourse.timeline.utils;
 
 import java.nio.charset.StandardCharsets;
 import javax.crypto.Cipher;

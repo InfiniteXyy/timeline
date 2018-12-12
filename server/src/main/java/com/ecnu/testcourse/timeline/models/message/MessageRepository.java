@@ -1,4 +1,4 @@
-package com.ecnu.testcourse.Timeline.models.message;
+package com.ecnu.testcourse.timeline.models.message;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
