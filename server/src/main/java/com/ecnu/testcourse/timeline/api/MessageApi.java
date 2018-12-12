@@ -71,7 +71,7 @@ public class MessageApi {
       User user = auth.authorize(authorization);
       Message message = new Message(newMessageParam.getBody(), user.getId());
       messageRepository.save(message);
-      return ResponseEntity.ok(object("message", message));
+      return ResponseEntity.ok(new MessageData(user, message).getWrappedData());
     } catch (Exception e) {
       return ResponseEntity.status(401)
           .body(ValidationHandler.wrapErrorRoot(object("token", "unauthorized")));
@@ -92,7 +92,7 @@ public class MessageApi {
       Message message = checkMessageEditable(user, id);
       message.update(newMessageParam.getBody());
       messageRepository.save(message);
-      return ResponseEntity.ok(new MessageData(user, message).getData());
+      return ResponseEntity.ok(new MessageData(user, message).getWrappedData());
     } catch (IllegalArgumentException e) {
       return ResponseEntity.status(403)
           .body(ValidationHandler

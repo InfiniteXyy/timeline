@@ -27,4 +27,10 @@ public class MessageData {
       }});
     }};
   }
+
+  public Map<String, Object> getWrappedData() {
+    return new HashMap<String, Object>() {{
+      put("message", getData());
+    }};
+  }
 }
