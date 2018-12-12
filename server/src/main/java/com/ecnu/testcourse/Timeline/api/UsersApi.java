@@ -7,10 +7,9 @@ import com.ecnu.testcourse.Timeline.models.user.EncryptService;
 import com.ecnu.testcourse.Timeline.models.user.JwtService;
 import com.ecnu.testcourse.Timeline.models.user.User;
 import com.ecnu.testcourse.Timeline.models.user.UserRepository;
+import com.ecnu.testcourse.Timeline.api.response.AuthorizedUserData;
 import com.ecnu.testcourse.Timeline.utils.ValidationHandler;
 import com.fasterxml.jackson.annotation.JsonRootName;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
 import javax.validation.Valid;
 import javax.validation.constraints.Email;
@@ -41,18 +40,7 @@ public class UsersApi {
     this.jwtService = jwtService;
   }
 
-  private Map<String, Object> renderAuthorizedUserObject(User user) {
-    return new HashMap<String, Object>() {{
-      put("user", new HashMap<String, Object>() {{
-        put("email", user.getEmail());
-        put("token", jwtService.toToken(user));
-        put("username", user.getUsername());
-        put("image", user.getImage());
-      }});
-    }};
-  }
-
-  @RequestMapping(path = "/", method = RequestMethod.POST)
+  @RequestMapping(method = RequestMethod.POST)
   public ResponseEntity userRegister(@Valid @RequestBody RegisterParam registerParam,
       BindingResult bindingResult) {
 
@@ -62,15 +50,24 @@ public class UsersApi {
     }
 
     Optional<User> optionalUser = userRepository.findByEmail(registerParam.getEmail());
-    if (!optionalUser.isPresent()) {
-      // 若没有该邮箱，则注册成功
-      User user = new User(registerParam.getEmail(), registerParam.getUsername(),
-          registerParam.getPassword(), "");
-      userRepository.save(user);
-      return ResponseEntity.ok(renderAuthorizedUserObject(user));
-    } else {
+    Optional<User> optionalUserByUsername = userRepository.findByEmail(registerParam.getUsername());
+    if (optionalUser.isPresent()) {
       return ResponseEntity.status(401)
-          .body(ValidationHandler.wrapRoot(object("email", "email has been used")));
+          .body(ValidationHandler.wrapErrorRoot(object("email", "email has been used")));
+    } else if (optionalUserByUsername.isPresent()) {
+      return ResponseEntity.status(401)
+          .body(ValidationHandler.wrapErrorRoot(object("username", "username has been used")));
+    } else {
+      // 若没有该邮箱，且没有同样的用户名，则注册成功
+      User user = new User(
+          registerParam.getEmail(),
+          registerParam.getUsername(),
+          encryptService.encrypt(registerParam.getPassword()),
+          "");
+      userRepository.save(user);
+      return ResponseEntity
+          .ok(new AuthorizedUserData(user, jwtService.toToken(user)).getUserData());
+
     }
   }
 
@@ -88,11 +85,12 @@ public class UsersApi {
         .check(loginParam.getPassword(), optionalUser.get().getPassword())) {
       User user = optionalUser.get();
       // 得到该用户
-      return ResponseEntity.ok(user);
+      return ResponseEntity
+          .ok(new AuthorizedUserData(user, jwtService.toToken(user)).getUserData());
     } else {
       // 密码或用户名错误
-      return ResponseEntity.status(401)
-          .body(ValidationHandler.wrapRoot(object("validation", "wrong username or password")));
+      return ResponseEntity.status(401).body(
+          ValidationHandler.wrapErrorRoot(object("validation", "wrong username or password")));
     }
   }
 }

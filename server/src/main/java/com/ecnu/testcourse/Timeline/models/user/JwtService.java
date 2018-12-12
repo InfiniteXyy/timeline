@@ -4,6 +4,6 @@ public interface JwtService {
 
   String toToken(User user);
 
-  Long toId(String token);
+  String toValue(String token);
 
 }

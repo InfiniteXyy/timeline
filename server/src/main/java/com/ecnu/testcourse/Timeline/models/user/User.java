@@ -47,4 +47,19 @@ public class User {
   public String getImage() {
     return image;
   }
+
+  public void update(String email, String username, String password, String image) {
+    if (!email.equals("")) {
+      this.email = email;
+    }
+    if (!username.equals("")) {
+      this.username = username;
+    }
+    if (!password.equals("")) {
+      this.password = password;
+    }
+    if (!image.equals("")) {
+      this.image = image;
+    }
+  }
 }
