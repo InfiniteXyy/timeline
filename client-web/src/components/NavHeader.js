@@ -4,11 +4,18 @@ import Container from 'react-bootstrap/lib/Container';
 import Image from 'react-bootstrap/lib/Image';
 import Dropdown from 'react-bootstrap/lib/Dropdown';
 import { connect } from 'react-redux';
-import { CLOSE_LOGIN_DIALOG, LOGOUT, OPEN_LOGIN_DIALOG } from '../constants/actionTypes';
+import {
+  CLOSE_LOGIN_DIALOG,
+  CLOSE_REGISTER_DIALOG,
+  LOGOUT,
+  OPEN_LOGIN_DIALOG,
+  OPEN_REGISTER_DIALOG
+} from '../constants/actionTypes';
 import Login from './Login';
 import Modal from 'react-bootstrap/lib/Modal';
 import ModalHeader from 'react-bootstrap/lib/ModalHeader';
 import CustomToggle from './common/CustomToggle';
+import Register from './Register';
 
 class NavHeader extends React.Component {
   render() {
@@ -42,6 +49,21 @@ class NavHeader extends React.Component {
             </button>
           </ModalHeader>
           <Login handleClose={this.props.onCloseLoginDialog} />
+        </Modal>
+
+        <Modal show={this.props.registerDialogShow} onHide={this.props.onCloseRegisterDialog}>
+          <ModalHeader className={'modal-header'}>
+            <button
+              type="button"
+              className="close"
+              data-dismiss="modal"
+              aria-label="Close"
+              onClick={this.props.onCloseRegisterDialog}
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </ModalHeader>
+          <Register handleClose={this.props.onCloseRegisterDialog} />
         </Modal>
       </Navbar>
     );
@@ -89,7 +111,7 @@ class NavHeader extends React.Component {
             登录
           </span>
         </Dropdown.Item>
-        <Dropdown.Item onClick={this.props.onOpenLoginDialog}>
+        <Dropdown.Item onClick={this.props.onOpenRegisterDialog}>
           <span>
             <i className="fa fa-vcard-o fa-fw" />
             注册
@@ -102,13 +124,16 @@ class NavHeader extends React.Component {
 
 const mapStateToProps = state => ({
   currentUser: state.common.currentUser,
-  loginDialogShow: state.home.loginDialogShow
+  loginDialogShow: state.home.loginDialogShow,
+  registerDialogShow: state.home.registerDialogShow
 });
 
 const mapDispatchToProps = dispatch => ({
   onClickLogout: () => dispatch({ type: LOGOUT }),
   onOpenLoginDialog: () => dispatch({ type: OPEN_LOGIN_DIALOG }),
-  onCloseLoginDialog: () => dispatch({ type: CLOSE_LOGIN_DIALOG })
+  onCloseLoginDialog: () => dispatch({ type: CLOSE_LOGIN_DIALOG }),
+  onOpenRegisterDialog: () => dispatch({ type: OPEN_REGISTER_DIALOG }),
+  onCloseRegisterDialog: () => dispatch({ type: CLOSE_REGISTER_DIALOG })
 });
 
 export default connect(

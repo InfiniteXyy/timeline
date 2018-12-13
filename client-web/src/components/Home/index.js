@@ -35,6 +35,10 @@ class Home extends React.Component {
         alert('请先登录');
         return;
       }
+      if (this.state.messageBody === '') {
+        alert('输入不能为空');
+        return;
+      }
       this.props.onAddMessage(agent.Message.add(this.state.messageBody));
       this.setState({
         messageBody: ''

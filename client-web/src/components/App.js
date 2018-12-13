@@ -12,14 +12,6 @@ import NavHeader from './NavHeader';
 
 import './App.css';
 
-const mapDispatchToProps = dispatch => ({
-  onLoad: (payload, token) => dispatch({ type: APP_LOAD, payload, token })
-});
-
-const mapStateToProps = state => {
-  return {};
-};
-
 class App extends React.Component {
   // 在启动 App 查看是否有保存着的token
   componentWillMount() {
@@ -44,7 +36,13 @@ class App extends React.Component {
     );
   }
 }
+const mapDispatchToProps = dispatch => ({
+  onLoad: (payload, token) => dispatch({ type: APP_LOAD, payload, token })
+});
 
+const mapStateToProps = state => {
+  return {};
+};
 export default connect(
   mapStateToProps,
   mapDispatchToProps

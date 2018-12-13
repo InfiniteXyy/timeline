@@ -55,6 +55,11 @@
   text-align: center;
 }
 
+.login-form .errors-list {
+  text-align: left;
+  color: #e9546b;
+}
+
 .forgot p {
   color: #777777;
   font-size: 14px;

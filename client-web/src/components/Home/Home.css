@@ -4,10 +4,19 @@
 }
 
 .submit-button {
-  color: #1DA1F2;
+  color: #1da1f2;
   font-size: 14px;
-  background-color: white;
-  border: 1px solid #ced4da;
+  border: 0;
+}
+.submit-button:hover {
+  background-color: #1da1f2;
+  font-size: 14px;
+  border: 0;
+}
+
+.form-control {
+  border: 0;
+  border-radius: 3px;
 }
 
 .message-container {
