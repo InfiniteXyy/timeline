@@ -56,9 +56,9 @@ public class CurrentUserApi {
       @RequestHeader(value = "Authorization") String authorization,
       @Valid @RequestBody UpdateUserParam updateUserParam,
       BindingResult bindingResult) {
-    // 若格式错误则直接返回403
+    // 若格式错误则直接返回422
     if (bindingResult.hasErrors()) {
-      return ResponseEntity.status(403).body(ValidationHandler.serialize(bindingResult));
+      return ResponseEntity.status(422).body(ValidationHandler.serialize(bindingResult));
     }
     try {
       User user = auth.authorize(authorization);

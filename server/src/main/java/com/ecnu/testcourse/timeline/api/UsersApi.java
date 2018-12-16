@@ -44,19 +44,19 @@ public class UsersApi {
   public ResponseEntity userRegister(@Valid @RequestBody RegisterParam registerParam,
       BindingResult bindingResult) {
 
-    // 若格式错误则直接返回403
+    // 若格式错误则直接返回422
     if (bindingResult.hasErrors()) {
-      return ResponseEntity.status(403).body(ValidationHandler.serialize(bindingResult));
+      return ResponseEntity.status(422).body(ValidationHandler.serialize(bindingResult));
     }
 
     Optional<User> optionalUser = userRepository.findByEmail(registerParam.getEmail());
-    Optional<User> optionalUserByUsername = userRepository.findByEmail(registerParam.getUsername());
+    Optional<User> optionalUserByUsername = userRepository.findByUsername(registerParam.getUsername());
     if (optionalUser.isPresent()) {
       return ResponseEntity.status(401)
-          .body(ValidationHandler.wrapErrorRoot(object("email", "email has been used")));
+          .body(ValidationHandler.wrapErrorRoot(object("email", "has been used")));
     } else if (optionalUserByUsername.isPresent()) {
       return ResponseEntity.status(401)
-          .body(ValidationHandler.wrapErrorRoot(object("username", "username has been used")));
+          .body(ValidationHandler.wrapErrorRoot(object("username", "has been used")));
     } else {
       // 若没有该邮箱，且没有同样的用户名，则注册成功
       User user = new User(
@@ -74,9 +74,9 @@ public class UsersApi {
   @RequestMapping(path = "/login", method = RequestMethod.POST)
   public ResponseEntity userLogin(@Valid @RequestBody LoginParam loginParam,
       BindingResult bindingResult) {
-    // 若格式错误则直接返回403
+    // 若格式错误则直接返回422
     if (bindingResult.hasErrors()) {
-      return ResponseEntity.status(403).body(ValidationHandler.serialize(bindingResult));
+      return ResponseEntity.status(422).body(ValidationHandler.serialize(bindingResult));
     }
 
     // 查看数据库中是否有该用户邮箱
@@ -88,9 +88,9 @@ public class UsersApi {
       return ResponseEntity
           .ok(new AuthorizedUserData(user, jwtService.toToken(user)).getUserData());
     } else {
-      // 密码或用户名错误
+      // 密码或邮箱错误
       return ResponseEntity.status(401).body(
-          ValidationHandler.wrapErrorRoot(object("validation", "wrong username or password")));
+          ValidationHandler.wrapErrorRoot(object("validation", "wrong email or password")));
     }
   }
 }

@@ -33,4 +33,6 @@ dependencies {
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 	testCompile "org.mockito:mockito-core:2.+"
 	testCompile("org.assertj:assertj-core:3.11.1")
+	testCompile 'io.rest-assured:rest-assured:3.2.0'
+	testCompile 'io.rest-assured:spring-mock-mvc:3.2.0'
 }
