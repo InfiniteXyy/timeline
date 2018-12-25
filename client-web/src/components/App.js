@@ -12,6 +12,8 @@ import NavHeader from './NavHeader';
 
 import './App.css';
 
+export const defaultAvatar = 'https://i0.wp.com/ebus.ca/wp-content/uploads/2017/08/profile-placeholder.jpg?ssl=1';
+
 class App extends React.Component {
   // 在启动 App 查看是否有保存着的token
   componentWillMount() {

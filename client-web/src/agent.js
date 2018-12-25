@@ -41,9 +41,8 @@ const requests = {
 
 const Message = {
   get: () => requests.get('/messages'),
-  delete: id => requests.del(`/messages/${encode(id)}`),
-  update: (id, body) => requests.put(`/messages/${encode(id)}`, { message: { body } }),
-  add: body => requests.post('/messages/', { message: { body } })
+  add: body => requests.post('/messages/', { message: { body } }),
+  loadMore: from => requests.get(`/messages/?from=${encode(from)}`)
 };
 
 const Auth = {
@@ -54,7 +53,7 @@ const Auth = {
 };
 
 const Profile = {
-  get: username => requests.get(`/profiles/${username}`)
+  get: username => requests.get(`/profiles/${encode(username)}`)
 };
 
 export default {

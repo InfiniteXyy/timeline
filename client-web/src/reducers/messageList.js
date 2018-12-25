@@ -1,4 +1,11 @@
-import { ASYNC_END, ASYNC_START, HOME_PAGE_LOADED, HOME_PAGE_UNLOADED, ADD_MESSAGE } from '../constants/actionTypes';
+import {
+  ASYNC_END,
+  ASYNC_START,
+  HOME_PAGE_LOADED,
+  HOME_PAGE_UNLOADED,
+  ADD_MESSAGE,
+  LOAD_MORE
+} from '../constants/actionTypes';
 
 const defaultState = {
   inProgress: false,
@@ -19,10 +26,9 @@ export default (state = defaultState, action) => {
     case ASYNC_END:
       return { ...state, inProgress: false };
     case ADD_MESSAGE:
-      return {
-        ...state,
-        messages: action.error ? null : [...state.messages, action.payload.message]
-      };
+      return { ...state, messages: action.error ? null : [action.payload.message, ...state.messages] };
+    case LOAD_MORE:
+      return { ...state, messages: action.error ? state.messages : [...state.messages, ...action.payload.messages] };
     default:
       return state;
   }

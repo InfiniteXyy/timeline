@@ -8,12 +8,15 @@ import {
   OPEN_LOGIN_DIALOG,
   OPEN_REGISTER_DIALOG,
   CLOSE_REGISTER_DIALOG,
-  REGISTER
+  REGISTER,
+  OPEN_PROFILE_DIALOG,
+  CLOSE_PROFILE_DIALOG
 } from '../constants/actionTypes';
 
 const defaultState = {
   loginDialogShow: false,
   registerDialogShow: false,
+  profileDialogShow: false,
   inProgress: false,
   errors: null
 };
@@ -31,6 +34,10 @@ export default (state = defaultState, action) => {
       return { ...state, registerDialogShow: true };
     case CLOSE_REGISTER_DIALOG:
       return { ...state, registerDialogShow: false, errors: null };
+    case OPEN_PROFILE_DIALOG:
+      return { ...state, profileDialogShow: true };
+    case CLOSE_PROFILE_DIALOG:
+      return { ...state, profileDialogShow: false };
     case LOGIN:
       return { ...state, loginDialogShow: action.error, errors: action.error ? action.payload.errors : null };
     case REGISTER:

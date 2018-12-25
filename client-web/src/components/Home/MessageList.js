@@ -13,7 +13,7 @@ const MessageList = props => {
   return (
     <div>
       {props.messages.map(i => (
-        <Message item={i} key={i.createdAt} />
+        <Message item={i} key={i.id} />
       ))}
     </div>
   );

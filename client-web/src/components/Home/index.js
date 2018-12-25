@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { ADD_MESSAGE, HOME_PAGE_LOADED, HOME_PAGE_UNLOADED } from '../../constants/actionTypes';
+import { ADD_MESSAGE, HOME_PAGE_LOADED, HOME_PAGE_UNLOADED, LOAD_MORE } from '../../constants/actionTypes';
 import agent from '../../agent';
 import Button from 'react-bootstrap/lib/Button';
 import InputGroup from 'react-bootstrap/lib/InputGroup';
@@ -15,7 +15,8 @@ const mapStateToProps = state => ({ ...state.messageList, currentUser: state.com
 const mapDispatchToProps = dispatch => ({
   onLoad: payload => dispatch({ type: HOME_PAGE_LOADED, payload }),
   onUnload: () => dispatch({ type: HOME_PAGE_UNLOADED }),
-  onAddMessage: payload => dispatch({ type: ADD_MESSAGE, payload })
+  onAddMessage: payload => dispatch({ type: ADD_MESSAGE, payload }),
+  onLoadMore: payload => dispatch({ type: LOAD_MORE, payload })
 });
 
 class Home extends React.Component {
@@ -49,6 +50,11 @@ class Home extends React.Component {
     this.refreshData = () => {
       this.props.onLoad(agent.Message.get());
     };
+
+    this.loadMore = () => {
+      const lastMessage = this.props.messages[this.props.messages.length - 1];
+      this.props.onLoadMore(agent.Message.loadMore(lastMessage.createdAt));
+    };
   }
 
   componentWillMount() {
@@ -62,7 +68,7 @@ class Home extends React.Component {
   render() {
     let { inProgress } = this.props;
     return (
-      <div>
+      <div className="main-list-container">
         <Row className="message-input-container justify-content-center">
           <InputGroup>
             <FormControl
@@ -83,10 +89,17 @@ class Home extends React.Component {
           onClick={this.refreshData}
           disabled={inProgress}
         >
-          {inProgress ? 'loading...' : '查看更多新闻'}
+          {inProgress ? 'loading...' : '刷新'}
         </Row>
 
         <MessageList messages={this.props.messages} />
+        <Row
+          className="justify-content-center align-items-center load-more-button"
+          onClick={this.loadMore}
+          disabled={inProgress}
+        >
+          {inProgress ? 'loading...' : '查看更多新闻'}
+        </Row>
       </div>
     );
   }
