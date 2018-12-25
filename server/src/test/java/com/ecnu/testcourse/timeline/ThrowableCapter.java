@@ -1,4 +1,4 @@
-package com.ecnu.testcourse.timeline.utils;
+package com.ecnu.testcourse.timeline;
 
 public class ThrowableCapter {
 

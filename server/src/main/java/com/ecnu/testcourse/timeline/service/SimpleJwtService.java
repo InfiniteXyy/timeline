@@ -15,21 +15,11 @@ public class SimpleJwtService implements JwtService {
   public String toToken(User user) {
 //    String value = user.getId() + " " + new DateTime().toString();
     String value = String.valueOf(user.getId());
-    try {
-      return Encrypt.encrypt(key, initVector, value);
-    } catch (Exception e) {
-      e.printStackTrace();
-      return null;
-    }
+    return Encrypt.encrypt(key, initVector, value);
   }
 
   @Override
   public String toValue(String token) {
-    try {
-      return Encrypt.decrypt(key, initVector, token);
-    } catch (Exception e) {
-      e.printStackTrace();
-      return null;
-    }
+    return Encrypt.decrypt(key, initVector, token);
   }
 }

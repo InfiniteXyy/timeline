@@ -17,23 +17,13 @@ public class SimpleEncryptService implements EncryptService {
 
   @Override
   public String encrypt(String value) {
-    try {
-      return Encrypt.encrypt(key, initVector, value);
-    } catch (Exception e) {
-      e.printStackTrace();
-      return null;
-    }
+    return Encrypt.encrypt(key, initVector, value);
   }
 
 
   @Override
   public boolean check(String checkPassword, String realPassword) {
-    try {
-      return checkPassword.equals(Encrypt.decrypt(key, initVector, realPassword));
-    } catch (Exception e) {
-      e.printStackTrace();
-      return false;
-    }
+    return checkPassword.equals(Encrypt.decrypt(key, initVector, realPassword));
   }
 
 }

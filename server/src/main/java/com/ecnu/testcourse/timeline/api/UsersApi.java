@@ -3,17 +3,16 @@ package com.ecnu.testcourse.timeline.api;
 
 import static com.ecnu.testcourse.timeline.utils.JsonHelper.object;
 
+import com.ecnu.testcourse.timeline.api.request.LoginParam;
+import com.ecnu.testcourse.timeline.api.request.RegisterParam;
 import com.ecnu.testcourse.timeline.models.user.EncryptService;
 import com.ecnu.testcourse.timeline.models.user.JwtService;
 import com.ecnu.testcourse.timeline.models.user.User;
 import com.ecnu.testcourse.timeline.models.user.UserRepository;
 import com.ecnu.testcourse.timeline.api.response.AuthorizedUserData;
 import com.ecnu.testcourse.timeline.utils.ValidationHandler;
-import com.fasterxml.jackson.annotation.JsonRootName;
 import java.util.Optional;
 import javax.validation.Valid;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -95,50 +94,3 @@ public class UsersApi {
   }
 }
 
-@JsonRootName("user")
-class LoginParam {
-
-  @NotBlank(message = "can't be empty")
-  @Email(message = "should be an email")
-  private String email;
-  @NotBlank(message = "can't be empty")
-  private String password;
-
-  public LoginParam() {
-  }
-
-  public String getEmail() {
-    return email;
-  }
-
-  public String getPassword() {
-    return password;
-  }
-}
-
-@JsonRootName("user")
-class RegisterParam {
-
-  @NotBlank(message = "can't be empty")
-  @Email(message = "should be an email")
-  private String email;
-  @NotBlank(message = "can't be empty")
-  private String username;
-  @NotBlank(message = "can't be empty")
-  private String password;
-
-  public RegisterParam() {
-  }
-
-  public String getEmail() {
-    return email;
-  }
-
-  public String getUsername() {
-    return username;
-  }
-
-  public String getPassword() {
-    return password;
-  }
-}

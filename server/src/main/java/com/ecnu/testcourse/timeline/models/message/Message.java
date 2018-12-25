@@ -47,10 +47,4 @@ public class Message {
     return userId;
   }
 
-  public void update(String body) {
-    if (!body.equals("")) {
-      this.body = body;
-      this.updatedAt = new DateTime().toString();
-    }
-  }
 }

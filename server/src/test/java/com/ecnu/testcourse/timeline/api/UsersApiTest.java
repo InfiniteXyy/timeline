@@ -132,6 +132,25 @@ public class UsersApiTest {
   }
 
   @Test
+  public void should_login_failure_when_password_empty() throws Exception {
+    Map<String, Object> loginParam = new HashMap<String, Object>() {{
+      put("user", new HashMap<String, Object>() {{
+        put("email", "email@email.com");
+        put("password", "");
+      }});
+    }};
+    given()
+        .contentType("application/json; charset=UTF-8")
+        .body(loginParam)
+        .when()
+        .post("/api/users/login")
+        .prettyPeek()
+        .then()
+        .statusCode(422)
+        .body("errors.password", equalTo("can't be empty"));
+  }
+
+  @Test
   public void should_register_success() throws Exception {
     when(userRepository.findByEmail(anyString())).thenReturn(Optional.empty());
     when(userRepository.findByUsername(anyString())).thenReturn(Optional.empty());

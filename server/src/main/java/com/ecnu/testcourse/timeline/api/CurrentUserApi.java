@@ -2,15 +2,14 @@ package com.ecnu.testcourse.timeline.api;
 
 import static com.ecnu.testcourse.timeline.utils.JsonHelper.object;
 
+import com.ecnu.testcourse.timeline.api.request.UpdateUserParam;
+import com.ecnu.testcourse.timeline.api.response.AuthorizedUserData;
 import com.ecnu.testcourse.timeline.models.user.EncryptService;
 import com.ecnu.testcourse.timeline.models.user.User;
 import com.ecnu.testcourse.timeline.models.user.UserRepository;
-import com.ecnu.testcourse.timeline.api.response.AuthorizedUserData;
 import com.ecnu.testcourse.timeline.service.Auth;
 import com.ecnu.testcourse.timeline.utils.ValidationHandler;
-import com.fasterxml.jackson.annotation.JsonRootName;
 import javax.validation.Valid;
-import javax.validation.constraints.Email;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -68,9 +67,8 @@ public class CurrentUserApi {
           encryptService.encrypt(updateUserParam.getPassword()),
           updateUserParam.getImage());
       userRepository.save(user);
-      return ResponseEntity
-          .ok(new AuthorizedUserData(user,
-              authorization.split(" ")[1]).getUserData());
+      return ResponseEntity.ok(new AuthorizedUserData(user,
+          authorization.split(" ")[1]).getUserData());
     } catch (Exception e) {
       return ResponseEntity.status(401)
           .body(ValidationHandler.wrapErrorRoot(object("token", "unauthorized")));
@@ -78,28 +76,3 @@ public class CurrentUserApi {
   }
 }
 
-@JsonRootName("user")
-class UpdateUserParam {
-
-  @Email(message = "should be an email")
-  private String email = "";
-  private String password = "";
-  private String username = "";
-  private String image = "";
-
-  public String getEmail() {
-    return email;
-  }
-
-  public String getPassword() {
-    return password;
-  }
-
-  public String getUsername() {
-    return username;
-  }
-
-  public String getImage() {
-    return image;
-  }
-}

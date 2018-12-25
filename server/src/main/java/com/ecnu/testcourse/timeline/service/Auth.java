@@ -23,15 +23,15 @@ public class Auth {
     token = token.split(" ")[1];
     String value = jwtService.toValue(token);
     if (value == null) {
-      throw new Exception();
+      throw new Exception("wrong token");
     }
     Long id = Long.valueOf(value);
     Optional<User> optionalUser = userRepository.findById(id);
-    // TODO: 为 token 加上时限
+    // 应该给token加上时间
     if (optionalUser.isPresent()) {
       return optionalUser.get();
     } else {
-      throw new Exception();
+      throw new Exception("no user");
     }
   }
 }
