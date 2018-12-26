@@ -41,7 +41,7 @@ const requests = {
 
 const Message = {
   get: () => requests.get('/messages'),
-  add: body => requests.post('/messages/', { message: { body } }),
+  add: (body, imageUrl = '') => requests.post('/messages/', { message: { body, imageUrl } }),
   loadMore: from => requests.get(`/messages/?from=${encode(from)}`)
 };
 

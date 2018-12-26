@@ -14,6 +14,7 @@ public class Message {
   private long id;
   private String body;
   private String createdAt;
+  private String imageUrl;
   private String updatedAt;
   private long userId;
 
@@ -21,9 +22,10 @@ public class Message {
   public Message() {
   }
 
-  public Message(String body, long userId) {
+  public Message(String body, String imageUrl, long userId) {
     this.createdAt = new DateTime().toString();
     this.body = body;
+    this.imageUrl = imageUrl;
     this.userId = userId;
   }
 
@@ -47,4 +49,7 @@ public class Message {
     return userId;
   }
 
+  public String getImageUrl() {
+    return imageUrl;
+  }
 }

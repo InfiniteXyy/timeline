@@ -21,6 +21,7 @@ public class MessageData {
       put("body", message.getBody());
       put("createdAt", message.getCreatedAt());
       put("updatedAt", message.getUpdatedAt());
+      put("imageUrl", message.getImageUrl());
       put("author", new HashMap<String, Object>() {{
         put("username", author.getUsername());
         put("image", author.getImage());

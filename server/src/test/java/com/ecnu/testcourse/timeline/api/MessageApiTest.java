@@ -51,7 +51,7 @@ public class MessageApiTest {
   @Test
   public void should_get_message_list_success() throws Exception {
     when(messageRepository.findTopMessages(anyInt())).thenReturn(Collections.singletonList(
-        new Message("haha", demoUser.getId())
+        new Message("haha", "", demoUser.getId())
     ));
     when(userRepository.findById(demoUser.getId())).thenReturn(Optional.of(demoUser));
 
@@ -68,7 +68,7 @@ public class MessageApiTest {
   public void should_get_message_list_with_limit() throws Exception {
     int limit = 10;
     when(messageRepository.findTopMessages(limit)).thenReturn(Collections.nCopies(limit,
-        new Message("haha", demoUser.getId())
+        new Message("haha", "", demoUser.getId())
     ));
     when(userRepository.findById(demoUser.getId())).thenReturn(Optional.of(demoUser));
 
@@ -85,7 +85,7 @@ public class MessageApiTest {
     String offset = "2018-12-18T15:17:16.232+08:00";
     when(messageRepository.findTopMessagesSince(anyInt(), anyString()))
         .thenReturn(Collections.singletonList(
-            new Message("haha", demoUser.getId())
+            new Message("haha", "", demoUser.getId())
         ));
     when(userRepository.findById(demoUser.getId())).thenReturn(Optional.of(demoUser));
 

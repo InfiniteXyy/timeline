@@ -76,7 +76,8 @@ public class MessageApi {
     }
     try {
       User user = auth.authorize(authorization);
-      Message message = new Message(newMessageParam.getBody(), user.getId());
+      Message message = new Message(newMessageParam.getBody(), newMessageParam.getImageUrl(),
+          user.getId());
       messageRepository.save(message);
       return ResponseEntity.ok(new MessageData(user, message).getWrappedData());
     } catch (Exception e) {

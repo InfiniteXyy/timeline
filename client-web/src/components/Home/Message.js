@@ -18,12 +18,7 @@ const Message = props => {
           <span className="message-date">{moment(i.createdAt).fromNow()}</span>
         </div>
         <p>{i.body}</p>
-        {Number(i.id) % 3 === 0 ? (
-          <Image
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRvx-NjD0rTsqjOJL0pUPRrcscFGVfA87hNob5-wAK4cOTg62Wx"
-            thumbnail
-          />
-        ) : null}
+        {i.imageUrl ? <Image style={{ maxHeight: 220 }} src={i.imageUrl} thumbnail /> : null}
       </div>
     </div>
   );

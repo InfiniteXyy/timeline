@@ -3,11 +3,11 @@ import Message from './Message';
 
 const MessageList = props => {
   if (!props.messages) {
-    return <h3>Loading...</h3>;
+    return null;
   }
 
   if (props.messages.length === 0) {
-    return <h3>No articles are here... yet.</h3>;
+    return <div className="empty-list">空空如也</div>;
   }
 
   return (

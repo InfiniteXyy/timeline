@@ -42,9 +42,10 @@ class Home extends React.Component {
         alert('输入不能为空');
         return;
       }
-      this.props.onAddMessage(agent.Message.add(this.state.messageBody));
+      this.props.onAddMessage(agent.Message.add(this.state.messageBody, this.state.imageUrl));
       this.setState({
-        messageBody: ''
+        messageBody: '',
+        imageUrl: ''
       });
     };
     this.handleOpenImage = () => {
@@ -56,9 +57,26 @@ class Home extends React.Component {
     };
 
     this.handleImageChosen = e => {
-      console.log(e.target.files[0]);
+      const image = e.target.files[0];
+      let formData = new FormData();
+      formData.append('file', image);
+      fetch('/cdn/api/upload', {
+        method: 'POST',
+        headers: { Authorization: 'bearer ILoveInfinitex.cn' },
+        body: formData
+      })
+        .then(response => response.json())
+        .then(res => {
+          this.setState({ imageUrl: 'http://cdn.infinitex.cn/api' + res.data.path });
+        })
+        .catch(e => {
+          alert('upload error');
+        });
     };
 
+    this.clearChosenImage = () => {
+      this.setState({ imageUrl: '' });
+    };
     this.refreshData = () => {
       this.props.onLoad(agent.Message.get());
     };
@@ -79,32 +97,45 @@ class Home extends React.Component {
 
   render() {
     let { inProgress } = this.props;
+    let imageContainer = (
+      <div className="image-upload" onClick={this.handleClickUpload}>
+        <input
+          ref={ip => {
+            this.imageInput = ip;
+          }}
+          style={{ display: 'none' }}
+          type="file"
+          accept="image/*"
+          onChange={this.handleImageChosen}
+        />
+        +
+      </div>
+    );
+    if (this.state.imageUrl !== '') {
+      imageContainer = (
+        <div className="preview-image-container">
+          <div className="btn-close">
+            <i className="fa fa-times" onClick={this.clearChosenImage} />
+          </div>
+          <img className="preview-image" src={this.state.imageUrl} alt={'preview'} />
+        </div>
+      );
+    }
     return (
       <div className="main-list-container">
         <div className="message-input-container">
           <Row className="justify-content-center">
             <InputGroup>
               <FormControl placeholder="有什么想说的？" onChange={this.updateBody} value={this.state.messageBody} />
-              <i className="fa fa-picture-o btn-circle" onClick={this.handleOpenImage} />
+              <i
+                className="fa fa-picture-o btn-circle"
+                style={this.state.imageOpen ? { color: '#1da1f2' } : {}}
+                onClick={this.handleOpenImage}
+              />
               <i className="fa fa-paper-plane-o btn-circle" onClick={this.handleSubmit} />
             </InputGroup>
           </Row>
-          {this.state.imageOpen ? (
-            <Row>
-              <div className="image-upload" onClick={this.handleClickUpload}>
-                <input
-                  ref={ip => {
-                    this.imageInput = ip;
-                  }}
-                  style={{ display: 'none' }}
-                  type="file"
-                  accept="image/*"
-                  onChange={this.handleImageChosen}
-                />
-                +
-              </div>
-            </Row>
-          ) : null}
+          {this.state.imageOpen ? <Row>{imageContainer}</Row> : null}
         </div>
 
         <MessageList messages={this.props.messages} />
