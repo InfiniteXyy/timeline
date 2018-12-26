@@ -30,7 +30,7 @@ class Login extends React.Component {
             <h2>登录你的账户</h2>
             <p>请输入邮箱地址和对应的密码</p>
           </div>
-          <ErrorList errors={this.props.errors}/>
+          <ErrorList errors={this.props.errors} />
           <form id="Login">
             <div className="form-group">
               <input
@@ -50,9 +50,6 @@ class Login extends React.Component {
                 placeholder="密码"
                 onChange={this.setPassword}
               />
-            </div>
-            <div className="forgot">
-              <p>忘记密码？</p>
             </div>
             <button type="submit" className="btn btn-primary">
               {this.props.inProgress ? <div className="loader " /> : <span>登录</span>}

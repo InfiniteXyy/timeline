@@ -10,10 +10,20 @@ const Message = props => {
     <div className="message-container">
       <Image src={i.author.image === '' ? defaultAvatar : i.author.image} roundedCircle />
       <div className="right-container">
-        <span>
-          <strong>{i.author.username}</strong> · {moment(i.createdAt).fromNow()}
-        </span>
+        <div className="message-header">
+          <div>
+            <strong>{i.author.username}</strong>
+            <span>@{i.author.username}</span>
+          </div>
+          <span className="message-date">{moment(i.createdAt).fromNow()}</span>
+        </div>
         <p>{i.body}</p>
+        {Number(i.id) % 3 === 0 ? (
+          <Image
+            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRvx-NjD0rTsqjOJL0pUPRrcscFGVfA87hNob5-wAK4cOTg62Wx"
+            thumbnail
+          />
+        ) : null}
       </div>
     </div>
   );

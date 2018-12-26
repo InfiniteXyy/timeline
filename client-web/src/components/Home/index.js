@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { ADD_MESSAGE, HOME_PAGE_LOADED, HOME_PAGE_UNLOADED, LOAD_MORE } from '../../constants/actionTypes';
 import agent from '../../agent';
-import Button from 'react-bootstrap/lib/Button';
 import InputGroup from 'react-bootstrap/lib/InputGroup';
 import FormControl from 'react-bootstrap/lib/FormControl';
 
@@ -22,7 +21,11 @@ const mapDispatchToProps = dispatch => ({
 class Home extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { messageBody: '' };
+    this.state = {
+      messageBody: '',
+      imageOpen: false,
+      imageUrl: ''
+    };
 
     this.updateBody = ev => {
       const state = this.state;
@@ -30,7 +33,6 @@ class Home extends React.Component {
       this.setState(newState);
     };
 
-    // 增
     this.handleSubmit = () => {
       if (this.props.currentUser === null) {
         alert('请先登录');
@@ -45,8 +47,18 @@ class Home extends React.Component {
         messageBody: ''
       });
     };
+    this.handleOpenImage = () => {
+      this.setState(({ imageOpen }) => ({ imageOpen: !imageOpen }));
+    };
 
-    // 查
+    this.handleClickUpload = () => {
+      this.imageInput.click();
+    };
+
+    this.handleImageChosen = e => {
+      console.log(e.target.files[0]);
+    };
+
     this.refreshData = () => {
       this.props.onLoad(agent.Message.get());
     };
@@ -69,28 +81,31 @@ class Home extends React.Component {
     let { inProgress } = this.props;
     return (
       <div className="main-list-container">
-        <Row className="message-input-container justify-content-center">
-          <InputGroup>
-            <FormControl
-              placeholder="有什么新鲜事？"
-              aria-label="message-field"
-              onChange={this.updateBody}
-              value={this.state.messageBody}
-            />
-            <InputGroup.Append>
-              <Button variant="light" className="btn btn-outline-secondary submit-button" onClick={this.handleSubmit}>
-                发送
-              </Button>
-            </InputGroup.Append>
-          </InputGroup>
-        </Row>
-        <Row
-          className="justify-content-center align-items-center refresh-button"
-          onClick={this.refreshData}
-          disabled={inProgress}
-        >
-          {inProgress ? 'loading...' : '刷新'}
-        </Row>
+        <div className="message-input-container">
+          <Row className="justify-content-center">
+            <InputGroup>
+              <FormControl placeholder="有什么想说的？" onChange={this.updateBody} value={this.state.messageBody} />
+              <i className="fa fa-picture-o btn-circle" onClick={this.handleOpenImage} />
+              <i className="fa fa-paper-plane-o btn-circle" onClick={this.handleSubmit} />
+            </InputGroup>
+          </Row>
+          {this.state.imageOpen ? (
+            <Row>
+              <div className="image-upload" onClick={this.handleClickUpload}>
+                <input
+                  ref={ip => {
+                    this.imageInput = ip;
+                  }}
+                  style={{ display: 'none' }}
+                  type="file"
+                  accept="image/*"
+                  onChange={this.handleImageChosen}
+                />
+                +
+              </div>
+            </Row>
+          ) : null}
+        </div>
 
         <MessageList messages={this.props.messages} />
         <Row
@@ -98,7 +113,7 @@ class Home extends React.Component {
           onClick={this.loadMore}
           disabled={inProgress}
         >
-          {inProgress ? 'loading...' : '查看更多新闻'}
+          {inProgress ? '加载中...' : '加载更多'}
         </Row>
       </div>
     );

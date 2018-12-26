@@ -1,53 +1,91 @@
 .message-input-container {
-  background-color: #eaf5fc;
-  padding: 10px 12px;
+  flex-direction: column;
+  padding: 18px 12px;
+  border-bottom: 1px solid #f1f1f1;
 }
 
-.submit-button {
-  color: #1da1f2;
-  font-size: 14px;
-  border: 0;
+.message-input-container .input-group {
+  align-items: center;
 }
 
-.submit-button:hover {
-  background-color: #1da1f2;
-  font-size: 14px;
-  border: 0;
+.image-upload {
+  height: 80px;
+  width: 80px;
+  margin: 16px;
+  border: 1px dashed #cccccc;
+  border-radius: 10px;
+  display: flex;
+  font-weight: lighter;
+  font-size: 32px;
+  color: #cccccc;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  cursor: pointer;
 }
 
 .form-control {
+  outline: none;
   border: 0;
-  border-radius: 3px;
+}
+
+.form-control:focus {
+  outline: none;
+  box-shadow: none;
 }
 
 .message-container {
   display: flex;
   flex-direction: row;
   align-items: start;
-  border-bottom: 1px solid #e6ecf0;
+  border-left: 1px solid white;
+  border-right: 1px solid white;
+  border-bottom: 1px solid #f1f1f1;
   margin: 0 -15px;
-  padding: 16px;
+  padding: 20px 16px;
 }
 
 .message-container:hover {
-  background-color: #f5f8fa;
+  background-color: #fafafa;
+  border-left: 1px solid #f1f1f1;
+  border-right: 1px solid #f1f1f1;
 }
 
 .message-container > img {
-  width: 48px;
-  height: 48px;
+  width: 32px;
+  height: 32px;
   margin-right: 16px;
+}
+
+.message-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.message-header span {
+  color: #cbcbcb;
+  margin-left: 10px;
+}
+
+.message-date {
+  color: #9b9b9b;
+  font-size: 13px;
+}
+
+.right-container {
+  width: 100%;
+}
+.right-container > p {
+  margin-top: 10px;
 }
 
 span > strong {
   color: #14171a;
   font-weight: bold;
-  font-size: 14px;
-}
-
-.right-container > span {
-  color: #657786;
-  font-size: 14px;
+  font-size: 16px;
 }
 
 .right-container > p {
@@ -71,17 +109,14 @@ span > strong {
 }
 
 .load-more-button {
-  background-color: #f5f8fa;
-  border-bottom: 1px solid #e6ecf0;
-  color: #1da1f2;
+  color: #4a4a4a;
   cursor: pointer;
   padding: 10px 1px;
   font-size: 14px;
 }
 
 .load-more-button:hover {
-  background-color: #e3ebf4;
-  border: 1px solid #ccd2d6;
+  background-color: #fafafa;
 }
 
 .row > .btn {
@@ -91,7 +126,7 @@ span > strong {
 }
 
 .form-control::placeholder {
-  color: #1da1f2;
+  color: #9b9b9b;
   font-size: 14px;
 }
 
@@ -119,7 +154,7 @@ span > strong {
   align-items: center;
 }
 
-.fa {
+.dropdown-item .fa {
   font-size: 14px;
   margin: 0 14px;
   color: #657786;
@@ -157,4 +192,12 @@ span > strong {
   font-size: 14px;
   font-weight: 300;
   margin: 0;
+}
+
+.btn-circle {
+  color: #657786;
+  padding: 10px;
+}
+.btn-circle:hover {
+  cursor: pointer;
 }

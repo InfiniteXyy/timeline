@@ -1,22 +1,22 @@
+button:focus {
+  outline: none !important;
+}
+
 .navbar {
   background-color: white;
-  height: 46px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+  height: 56px;
 }
 
 .column-container {
   margin-top: 20px;
   margin-bottom: 40px;
   background-color: white;
-  -webkit-box-shadow: 0px 8px 60px -26px rgba(0, 0, 0, 0.23);
-  -moz-box-shadow: 0px 8px 60px -26px rgba(0, 0, 0, 0.23);
-  box-shadow: 0px 8px 60px -26px rgba(0, 0, 0, 0.23);
 }
 
 .root {
   width: 100%;
   height: 100%;
-  background-color: #e7ecef;
+  background-color: #f7f7f7;
 }
 
 .modal-content {
@@ -60,14 +60,9 @@
   text-align: left;
   padding-left: 0;
 }
+
 .login-form .alert-danger {
   min-width: 100%;
-}
-
-.forgot p {
-  color: #777777;
-  font-size: 14px;
-  text-decoration: underline;
 }
 
 .login-form .btn.btn-primary {
@@ -79,16 +74,12 @@
   height: 50px;
   line-height: 50px;
   padding: 0;
+  margin-top: 30px;
 }
 
 .login-form .btn.btn-primary:active {
   background-color: #1da1f2;
   border-color: #1da1f2;
-}
-
-.forgot {
-  text-align: left;
-  margin-bottom: 30px;
 }
 
 .modal-header {
