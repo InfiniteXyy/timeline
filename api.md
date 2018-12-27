@@ -12,12 +12,12 @@ Make sure the right content type like `Content-Type: application/json; charset=u
 
 ```JSON
 {
-  "user": {
-    "email": "infiniteXyy@gmail.com",
-    "token": "jwt.token.here",
-    "username": "infiniteXyy",
-    "image": null
-  }
+   "user": {
+      "email": "infiniteXyy@gmail.com",
+      "token": "jwt.token.here",
+      "username": "infiniteXyy",
+      "image": null
+   }
 }
 ```
 
@@ -36,16 +36,17 @@ Make sure the right content type like `Content-Type: application/json; charset=u
 
 ```JSON
 {
-  "message":{
-    "id": "sdfwer134234ew",
-    "body": "It was fun.",
-    "createdAt": "2018-12-11T11:04:34.359Z",
-    "updatedAt": "2018-12-12T11:04:34.359Z",
-    "author": {
-      "username": "pikachu",
-      "image": "http://cdn.infinitex.cn/images/pikachu.jpg",
-    }
-  }
+   "message":{
+      "id": "sdfwer134234ew",
+      "body": "It was fun.",
+      "createdAt": "2018-12-11T11:04:34.359Z",
+      "updatedAt": "2018-12-12T11:04:34.359Z",
+      "imageUrl": "http://cdn.infinitex.cn/51/12342341.png",
+      "author": {
+         "username": "pikachu",
+         "image": "http://cdn.infinitex.cn/images/pikachu.jpg",
+      }
+   }
 }
 ```
 
@@ -53,17 +54,18 @@ Make sure the right content type like `Content-Type: application/json; charset=u
 
 ```JSON
 {
-  "messages":[{
-    "id": "sdfwer134234ew",
-    "body": "It was fun.",
-    "createdAt": "2018-12-11T11:04:34.359Z",
-    "updatedAt": "2018-12-12T11:04:34.359Z",
-    "author": {
-      "username": "pikachu",
-      "image": "http://cdn.infinitex.cn/images/pikachu.jpg",
-    }
-  }],
-  "messagesCount": 1
+   "messages":[{
+      "id": "sdfwer134234ew",
+      "body": "It was fun.",
+      "createdAt": "2018-12-11T11:04:34.359Z",
+      "updatedAt": "2018-12-12T11:04:34.359Z",
+      "imageUrl": "http://cdn.infinitex.cn/51/12342341.png",
+      "author": {
+         "username": "pikachu",
+         "image": "http://cdn.infinitex.cn/images/pikachu.jpg",
+      }
+   }],
+   "messagesCount": 1
 }
 ```
 
@@ -169,13 +171,15 @@ Returns most recent massages globally by default
 
 **Query Parameters:**
 
-Limit number of messages (default is 20):
+Limit number of messages (default is 10):
 
 `?limit=20`
 
-Offset/skip number of messages (default is 0):
+Start from date (default is null, format in ISO datetime):
 
-`?offset=0`
+`?from=2018-12-12T13%3A34%3A04.359%2B08%3A00`
+
+encodeURLElement required
 
 Authentication optional, will return [multiple messages](#multiple-messages), ordered by most recent first
 
@@ -187,9 +191,10 @@ Example request body:
 
 ```JSON
 {
-  "message": {
-    "body": "I am so FAT!",
-  }
+   "message": {
+      "body": "I am so FAT!",
+      "imageUrl": "http://cdn.infintiex.cn/forexample.png"
+   }
 }
 ```
 
@@ -197,27 +202,39 @@ Authentication required, will return an [Message](#single-message)
 
 Required fields: `body`
 
-### Update Message
+Optional fields: `imageUrl`
 
-`PUT /api/messages/:id`
+
+
+### Upload/Download Image
+
+`POST /cdn/api/upload`
 
 Example request body:
 
-```JSON
+```json
 {
-  "message": {
-    "body": "I am not fat at all"
-  }
+   "file": filehere
 }
 ```
 
-Authentication required, returns the updated [Message](#single-message)
+Required fields: `file`
 
-Optional fields: `body`
+Body-type: `form-data`
 
+Authentication required, Token `bearer ILoveInfinitex.cn`
 
-### Delete Message
+will return
 
-`DELETE /api/messages/:id`
+```json
+{
+   "data": {
+      "path": "/66/125fe2f631e9336ec26ca88e8073fc.png"
+   }
+}
+```
 
-Authentication required
+`GET http://cdn.infinitex.cn/api/:path`
+
+return image
+

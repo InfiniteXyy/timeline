@@ -4,6 +4,7 @@ import { ADD_MESSAGE, HOME_PAGE_LOADED, HOME_PAGE_UNLOADED, LOAD_MORE } from '..
 import agent from '../../agent';
 import InputGroup from 'react-bootstrap/lib/InputGroup';
 import FormControl from 'react-bootstrap/lib/FormControl';
+import lrz from 'lrz';
 
 import './Home.css';
 
@@ -58,19 +59,32 @@ class Home extends React.Component {
 
     this.handleImageChosen = e => {
       const image = e.target.files[0];
-      let formData = new FormData();
-      formData.append('file', image);
-      fetch('/cdn/api/upload', {
-        method: 'POST',
-        headers: { Authorization: 'bearer ILoveInfinitex.cn' },
-        body: formData
-      })
-        .then(response => response.json())
-        .then(res => {
-          this.setState({ imageUrl: 'http://cdn.infinitex.cn/api' + res.data.path });
+      lrz(image)
+        .then(rst => {
+          let formData = new FormData();
+          let blob = rst.file;
+          if (typeof blob.name !== 'string') {
+            blob = new File([blob], 'foo.jpg', {
+              type: blob.type
+            });
+            console.log('optimized!');
+          }
+          formData.append('file', blob);
+          fetch('/cdn/api/upload', {
+            method: 'POST',
+            headers: { Authorization: 'bearer ILoveInfinitex.cn' },
+            body: formData
+          })
+            .then(response => response.json())
+            .then(res => {
+              this.setState({ imageUrl: 'http://cdn.infinitex.cn/api' + res.data.path });
+            })
+            .catch(e => {
+              alert('upload error');
+            });
         })
-        .catch(e => {
-          alert('upload error');
+        .catch(err => {
+          console.log(err);
         });
     };
 
@@ -113,11 +127,13 @@ class Home extends React.Component {
     );
     if (this.state.imageUrl !== '') {
       imageContainer = (
-        <div className="preview-image-container">
+        <div className="preview-container">
+          <div className="preview-image-container">
+            <img className="preview-image" src={this.state.imageUrl} alt={'preview'} />
+          </div>
           <div className="btn-close">
             <i className="fa fa-times" onClick={this.clearChosenImage} />
           </div>
-          <img className="preview-image" src={this.state.imageUrl} alt={'preview'} />
         </div>
       );
     }

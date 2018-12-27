@@ -33,7 +33,7 @@ class NavHeader extends React.Component {
     return (
       <Navbar className="navbar">
         <Container>
-          <Navbar.Brand>Timeline</Navbar.Brand>
+          <Navbar.Brand>时间线</Navbar.Brand>
           <Navbar.Collapse className="justify-content-end">
             <Dropdown alignRight id="dropdown-avatar-components">
               <Dropdown.Toggle as={CustomToggle} id="dropdown-custom-components">

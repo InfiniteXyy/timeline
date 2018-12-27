@@ -199,21 +199,24 @@ span > strong {
   font-size: 14px;
 }
 
+.preview-container {
+  display: flex;
+  margin: 10px;
+}
+
 .preview-image-container {
-  margin: 16px;
-  flex-direction: column;
-  color: #cccccc;
-  align-items: flex-end;
+  padding: 6px;
+  border: 1px dashed #cccccc;
+  border-radius: 5px;
 }
 
 .btn-close > .fa {
   font-size: 16px;
   font-weight: lighter;
+  color: #cccccc;
+  margin-left: 10px;
 }
 
-.btn-close {
-  text-align: right;
-}
 
 .btn-close .fa:hover {
   cursor: pointer;
@@ -222,5 +225,5 @@ span > strong {
 
 .preview-image {
   max-width: 100%;
-  max-height: 120px;
+  max-height: 200px;
 }
