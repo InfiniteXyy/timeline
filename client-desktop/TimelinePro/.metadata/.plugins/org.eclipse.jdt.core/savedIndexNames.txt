@@ -1,0 +1,1 @@
+INDEX VERSION 1.130+D:\Java\TimelinePro\.metadata\.plugins\org.eclipse.jdt.core
