@@ -18,25 +18,6 @@ public class ImageWindow {
 
 	public JFrame frame;
 
-	/**
-	 * Launch the application.
-	 
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					ImageWindow window = new ImageWindow();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-	 */
-	/**
-	 * Create the application.
-	 */
 	public ImageWindow(String url) {
 		initialize(url);
 	}

@@ -26,6 +26,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.swing.JTextField;
 import javax.swing.ImageIcon;
@@ -162,6 +164,10 @@ public class Register {
 		registerButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				User user = new User();
+				if(!isEmail(email.getText())) {
+					JOptionPane.showMessageDialog(null, "邮箱格式错误", "", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
 				if(!password.getText().equals(password2.getText())) {
 					JOptionPane.showMessageDialog(null, "两次密码不一致", "", JOptionPane.ERROR_MESSAGE);
 					return;
@@ -191,6 +197,14 @@ public class Register {
 			}
 		});
 	
+	}
+	
+	public boolean isEmail(String email) {
+		String str = "^([a-zA-Z0-9_\\-\\.]+)@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.)|"
+				+ "(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\\]?)$";
+		Pattern p = Pattern.compile(str);
+		Matcher m = p.matcher(email);
+		return m.matches();
 	}
 
 }

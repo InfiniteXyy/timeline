@@ -22,13 +22,32 @@ import entity.Message;
 import entity.User;
 import http.util.HttpUtil;
 
-
 public class Service {
 	
 	private static String apiUrl = "http://timeline.infinitex.cn";
 	
 	public static List<Message> getAllMessages() throws JSONException {
 		String result = HttpUtil.sendGet(apiUrl + "/api/messages?limit=20");
+		JSONObject jsonObj = new JSONObject(result);
+		JSONArray messages = new JSONArray(jsonObj.getString("messages"));
+		List <Message> messageList = new ArrayList<Message>();
+		
+		for(int i = 0; i < messages.length(); i++) {
+			JSONObject message = messages.getJSONObject(i);
+			String createdAt = message.getString("createdAt");
+			JSONObject authorObj = message.getJSONObject("author");
+			int id = message.getInt("id");
+			String body = message.getString("body");
+			String updatedAt = message.getString("updatedAt");
+			String imageUrl = message.getString("imageUrl");
+			messageList.add(new Message(createdAt, id, body, updatedAt, authorObj.getString("image"), authorObj.getString("username"), imageUrl));
+		}
+		Collections.sort(messageList);
+		return messageList;
+	}
+	
+	public static List<Message> getMessagesFrom(int limit, String fromTime) throws JSONException {
+		String result = HttpUtil.sendGet(apiUrl + "/api/messages?limit=" + limit + "&from=" + fromTime);
 		JSONObject jsonObj = new JSONObject(result);
 		JSONArray messages = new JSONArray(jsonObj.getString("messages"));
 		List <Message> messageList = new ArrayList<Message>();

@@ -1,19 +1,25 @@
 package ui;
 
+
 import javax.swing.JFrame;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.net.MalformedURLException;
 import java.net.URL;
+
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.SwingConstants;
 import control.MainControl;
 import entity.User;
 import service.Service;
+
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
@@ -39,10 +45,47 @@ public class Login {
 	private JTextField email;
 	private JPasswordField password;
 
+	/**
+	 * Launch the application.
+	
+	public static void main(String[] args) {
+		
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					Login window = new Login();
+					window.frmTimeline.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+		
+		Login window = new Login();
+		window.frmTimeline.setVisible(true);
+		
+	}
+	 */
+	/**	
+	 * Create the application.
+	 */
 	public Login() {
+		
+		try
+	    {
+	        org.jb2011.lnf.beautyeye.BeautyEyeLNFHelper.launchBeautyEyeLNF();
+	    }
+	    catch(Exception e)
+	    {
+	        //TODO exception
+	    }
+	    
 		initialize();
 	}
 
+	/**
+	 * Initialize the contents of the frame.
+	 */
 	private void initialize() {
 		frmTimeline = new JFrame();
 		frmTimeline.setTitle("TIMELINE");
@@ -109,7 +152,7 @@ public class Login {
 		loginButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				User user = new User();
-				user.setEmail(email.getText());
+				user.setEmail(email.getText());	
 				user.setPassword(password.getText());
 				User user2 = Service.login(user);
 				if(user2 == null) {
@@ -126,8 +169,19 @@ public class Login {
 					}
 					ImageIcon headIcon = new ImageIcon(headUrl);
 					headIcon.setImage(headIcon.getImage().getScaledInstance(45, 45,Image.SCALE_DEFAULT));
-					JLabel headLebal = new JLabel(headIcon);
-					UserIndex.window.userPanel.add(headLebal);
+					UserIndex.window.headLebal = new JLabel(headIcon);
+					UserIndex.window.userPanel.add(UserIndex.window.headLebal);
+					
+					UserIndex.window.headLebal.addMouseListener(new MouseAdapter() {
+						public void mouseClicked(MouseEvent e) {
+							MainControl.user = null;
+							UserIndex.window.userPanel.remove(UserIndex.window.headLebal);
+							UserIndex.window.userPanel.add(loginButton);
+							UserIndex.window.userPanel.validate();
+							UserIndex.window.userPanel.repaint();
+						}
+					});
+					
 					frmTimeline.dispose();
 				}
 			}

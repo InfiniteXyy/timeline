@@ -29,6 +29,7 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URLEncoder;
@@ -151,6 +152,9 @@ public class ReleaseWindow {
 				message.setCreatedAt(createdAt);
 				message.setBody(textArea.getText());
 				message.setUpdatedAt("");
+				
+				
+				
 				try {
 					if(Service.createMessage(MainControl.user, message)) {
 						frame.dispose();
@@ -161,6 +165,46 @@ public class ReleaseWindow {
 				} catch(NullPointerException e1) {
 					JOptionPane.showMessageDialog(null, "未登录", "", JOptionPane.ERROR_MESSAGE);
 				}
+		
+				new Thread(new Runnable() {
+					
+					@Override
+					public void run() {
+						DateTime dt = new DateTime();
+						String createdAt = dt.toString();
+						Message message = new Message();
+						
+						String imageUrl = "";
+						
+						if(file != null) {
+							try {
+								imageUrl = Service.uploadImage(new File(file.toString()));
+							} catch (IOException e1) {
+								e1.printStackTrace();
+							}
+						}
+						
+						message.setCreatedAt(createdAt);
+						message.setBody(textArea.getText());
+						message.setUpdatedAt("");
+						message.setImageUrl(imageUrl);
+						
+						
+						try {
+							if(Service.createMessage(MainControl.user, message)) {
+								frame.dispose();
+							} else {
+								frame.dispose();
+								JOptionPane.showMessageDialog(null, "发布失败", "", JOptionPane.ERROR_MESSAGE);
+							}
+						} catch(NullPointerException e1) {
+							JOptionPane.showMessageDialog(null, "未登录", "", JOptionPane.ERROR_MESSAGE);
+						}
+						
+						
+						
+					}
+				}).start();
 				/*
 				UserIndex.window.updateMessage();
 				UserIndex.window.loadHead.start();
