@@ -22,6 +22,7 @@ import util.ImgUtil;
 
 import java.awt.GridBagConstraints;
 
+import javax.imageio.ImageIO;
 import javax.imageio.ImageWriteParam;
 import javax.imageio.ImageWriter;
 import javax.swing.ImageIcon;
@@ -125,7 +126,20 @@ public class ReleaseWindow {
 		        jfc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES );  
 		        jfc.showDialog(new JLabel(), "选择");  
 		        file = jfc.getSelectedFile(); 
+				if(file == null) return ;
+				Image image2;
+				try {
+					image2 = ImageIO.read(file);
+					if(image2 == null) {
+						JOptionPane.showMessageDialog(null, "文件格式错误", "", JOptionPane.ERROR_MESSAGE);
+						return ;
+					}		
+				} catch (IOException e2) {
+					JOptionPane.showMessageDialog(null, "文件格式错误", "", JOptionPane.ERROR_MESSAGE);
+					return ;
+				}
 				
+
 				try {
 					image = new ImageIcon(file.toURL());
 				} catch (MalformedURLException e1) {
@@ -160,6 +174,11 @@ public class ReleaseWindow {
 		
 		releaseButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
+				if(MainControl.user == null) {
+					JOptionPane.showMessageDialog(null, "未登录", "", JOptionPane.ERROR_MESSAGE);
+					return ;
+				}
+					
 				DateTime dt = new DateTime();
 				String createdAt = dt.toString();
 				Message message = new Message();
@@ -167,19 +186,6 @@ public class ReleaseWindow {
 				message.setCreatedAt(createdAt);
 				message.setBody(textArea.getText());
 				message.setUpdatedAt("");
-				
-				/*
-				try {
-					if(Service.createMessage(MainControl.user, message)) {
-						frame.dispose();
-					} else {
-						frame.dispose();
-						JOptionPane.showMessageDialog(null, "发布失败", "", JOptionPane.ERROR_MESSAGE);
-					}
-				} catch(NullPointerException e1) {
-					JOptionPane.showMessageDialog(null, "未登录", "", JOptionPane.ERROR_MESSAGE);
-				}
-				*/
 				
 				new Thread(new Runnable() {
 					
@@ -204,19 +210,12 @@ public class ReleaseWindow {
 						message.setUpdatedAt("");
 						message.setImageUrl(imageUrl);
 						
-						
-						try {
-							if(Service.createMessage(MainControl.user, message)) {
-								frame.dispose();
-							} else {
-								frame.dispose();
-								JOptionPane.showMessageDialog(null, "发布失败", "", JOptionPane.ERROR_MESSAGE);
-							}
-						} catch(NullPointerException e1) {
-							JOptionPane.showMessageDialog(null, "未登录", "", JOptionPane.ERROR_MESSAGE);
-						}
-						
-						
+						if(Service.createMessage(MainControl.user, message)) {
+							frame.dispose();
+						} else {
+							frame.dispose();
+							JOptionPane.showMessageDialog(null, "发布失败", "", JOptionPane.ERROR_MESSAGE);
+						}	
 						
 					}
 				}).start();
