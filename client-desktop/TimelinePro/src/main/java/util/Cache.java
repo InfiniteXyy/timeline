@@ -13,6 +13,12 @@ import javax.swing.ImageIcon;
 
 public class Cache {
 	private static void savePic(ImageIcon imageIcon, String path) {
+		//判断download文件夹是否存在
+		String dirPath = System.getProperty("user.dir") + "\\download\\";
+		File file = new File(dirPath);
+		if(!file.isDirectory()) {
+			file.mkdirs();
+		}
 		Image image = imageIcon.getImage();
 		int w = image.getWidth(imageIcon.getImageObserver());
 		int h = image.getHeight(imageIcon.getImageObserver());

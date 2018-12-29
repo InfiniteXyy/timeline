@@ -1,21 +1,12 @@
 package ui;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import java.awt.GridBagLayout;
 import javax.swing.JPanel;
-import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
-
 import java.awt.GridBagConstraints;
-import java.awt.Insets;
-import java.awt.Point;
-
-import javax.swing.JLabel;
 import javax.swing.JButton;
 import java.awt.GridLayout;
-import java.awt.CardLayout;
 import java.awt.FlowLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -25,23 +16,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
-
-import javax.swing.JTextArea;
-import javax.swing.JList;
-import javax.swing.JTextField;
-import javax.swing.ListModel;
 import javax.swing.ScrollPaneConstants;
-
 import org.json.JSONException;
-
-import control.MainControl;
 import entity.Message;
-import entity.User;
-import service.DBService;
 import service.Service;
-
-import java.awt.ScrollPane;
 
 public class UserIndex {
 
@@ -51,7 +29,6 @@ public class UserIndex {
 	public JPanel userPanel = null;
 	public JScrollPane scrollPane = null;
 	public GridBagConstraints gbc_panel = null;
-	public Vector<MessagePanel> messageList = new Vector<MessagePanel>();
 	public List<Message> messages = new ArrayList<Message>();
 	private List<MessagePanel> messagePanelList = new ArrayList();
 	public Thread loadHead = null;
@@ -65,19 +42,6 @@ public class UserIndex {
 	 */
 
 	public static void main(String[] args) {
-
-		/*
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					UserIndex window = new UserIndex();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-		*/
 
 		window = new UserIndex();
 		window.frame.setVisible(true);
@@ -103,18 +67,15 @@ public class UserIndex {
 		try {
 			messages = Service.getAllMessages();
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		for (int i = 0; i < messages.size(); i++) {
 			MessagePanel messagePanel = new MessagePanel(messages.get(i));
 			messagePanelList.add(messagePanel);
 			panel.add(messagePanel);
-			// panel.add(new MessagePanel(messages.get(i)));
 		}
 		panel.revalidate();
 		scrollPane.revalidate();
-		// frame.repaint();
 		loadHead = new Thread(new Runnable() {
 
 			@Override

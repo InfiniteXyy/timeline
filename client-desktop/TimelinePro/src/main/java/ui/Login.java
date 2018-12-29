@@ -1,7 +1,5 @@
 package ui;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import java.awt.GridLayout;
 import java.awt.Image;
@@ -9,20 +7,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.MalformedURLException;
 import java.net.URL;
-
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-
 import java.awt.Font;
 import javax.swing.SwingConstants;
-
-import org.json.JSONException;
-
 import control.MainControl;
 import entity.User;
-import service.DBService;
 import service.Service;
-
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
@@ -48,47 +39,10 @@ public class Login {
 	private JTextField email;
 	private JPasswordField password;
 
-	/**
-	 * Launch the application.
-	
-	public static void main(String[] args) {
-		
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Login window = new Login();
-					window.frmTimeline.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-		
-		Login window = new Login();
-		window.frmTimeline.setVisible(true);
-		
-	}
-	 */
-	/**	
-	 * Create the application.
-	 */
 	public Login() {
-		
-		try
-	    {
-	        org.jb2011.lnf.beautyeye.BeautyEyeLNFHelper.launchBeautyEyeLNF();
-	    }
-	    catch(Exception e)
-	    {
-	        //TODO exception
-	    }
-	    
 		initialize();
 	}
 
-	/**
-	 * Initialize the contents of the frame.
-	 */
 	private void initialize() {
 		frmTimeline = new JFrame();
 		frmTimeline.setTitle("TIMELINE");

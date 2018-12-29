@@ -1,7 +1,6 @@
 package client;
 
 import http.util.HttpUtil;
-import service.DBService;
 import service.Service;
 
 import java.text.ParseException;
@@ -22,7 +21,7 @@ public class Client {
 	public static void main(String[] args) throws JSONException, ParseException {
 		
 		List <Message> messageList = new ArrayList<>();
-		messageList = DBService.getAllMessages();
+		messageList = Service.getAllMessages();
 		for(Message message : messageList) {
 			System.out.println(message.getImageUrl());
 			System.out.println("1");
