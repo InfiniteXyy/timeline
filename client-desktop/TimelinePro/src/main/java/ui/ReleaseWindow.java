@@ -154,7 +154,7 @@ public class ReleaseWindow {
 				message.setUpdatedAt("");
 				
 				
-				
+				/*
 				try {
 					if(Service.createMessage(MainControl.user, message)) {
 						frame.dispose();
@@ -165,7 +165,8 @@ public class ReleaseWindow {
 				} catch(NullPointerException e1) {
 					JOptionPane.showMessageDialog(null, "未登录", "", JOptionPane.ERROR_MESSAGE);
 				}
-		
+				*/
+				
 				new Thread(new Runnable() {
 					
 					@Override

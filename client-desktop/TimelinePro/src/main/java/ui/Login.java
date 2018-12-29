@@ -170,18 +170,20 @@ public class Login {
 					ImageIcon headIcon = new ImageIcon(headUrl);
 					headIcon.setImage(headIcon.getImage().getScaledInstance(45, 45,Image.SCALE_DEFAULT));
 					UserIndex.window.headLebal = new JLabel(headIcon);
+					UserIndex.window.userPanel.add(UserIndex.window.logoutButton);
 					UserIndex.window.userPanel.add(UserIndex.window.headLebal);
 					
+					/*
 					UserIndex.window.headLebal.addMouseListener(new MouseAdapter() {
 						public void mouseClicked(MouseEvent e) {
 							MainControl.user = null;
 							UserIndex.window.userPanel.remove(UserIndex.window.headLebal);
-							UserIndex.window.userPanel.add(loginButton);
+							UserIndex.window.userPanel.add(UserIndex.window.loginButton);
 							UserIndex.window.userPanel.validate();
 							UserIndex.window.userPanel.repaint();
 						}
 					});
-					
+					*/
 					frmTimeline.dispose();
 				}
 			}

@@ -55,6 +55,7 @@ public class UserIndex {
 	public JButton releaseButton = null;
 	public JButton loginButton = null;
 	public JButton updateButton = null;
+	public JButton logoutButton = null;
 	public JLabel headLebal = new JLabel();
 
 	/**
@@ -164,6 +165,9 @@ public class UserIndex {
 		loginButton.setPreferredSize(new Dimension(75, 35));
 		userPanel.add(loginButton);
 		
+		logoutButton = new JButton("注销");
+		logoutButton.setFont(new Font("微软雅黑", Font.PLAIN, 12));
+		logoutButton.setPreferredSize(new Dimension(75, 35));
 
 		panel = new JPanel();
 		panel.setBackground(Color.GRAY);
@@ -211,8 +215,20 @@ public class UserIndex {
 
 		loginButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				System.out.println("?");
 				Login login = new Login();
 				login.frmTimeline.setVisible(true);
+			}
+		});
+		
+		logoutButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				MainControl.user = null;
+				userPanel.remove(headLebal);
+				userPanel.remove(logoutButton);
+				userPanel.add(loginButton);
+				userPanel.validate();
+				userPanel.repaint();
 			}
 		});
 		
