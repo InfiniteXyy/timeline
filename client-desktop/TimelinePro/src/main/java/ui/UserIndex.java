@@ -1,21 +1,13 @@
 package ui;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import java.awt.GridBagLayout;
 import javax.swing.JPanel;
-import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
-
 import java.awt.GridBagConstraints;
-import java.awt.Insets;
-import java.awt.Point;
-
 import javax.swing.JLabel;
 import javax.swing.JButton;
 import java.awt.GridLayout;
-import java.awt.CardLayout;
 import java.awt.FlowLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -23,21 +15,14 @@ import java.awt.Font;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 import javax.swing.ScrollPaneConstants;
-
 import org.json.JSONException;
-
-import control.MainControl;
 import entity.Message;
-import entity.User;
 import service.Service;
 
-import java.awt.ScrollPane;
 
 public class UserIndex {
 
@@ -100,17 +85,6 @@ public class UserIndex {
 		panel.revalidate();
 		scrollPane.revalidate();
 
-		/*
-		loadHead = new Thread(new Runnable() {
-
-			@Override
-			public void run() {
-				for (int i = 0; i < messages.size(); i++) {
-					messagePanelList.get(i).addHeader(messages.get(i).getAuthor().getImage());
-				}
-			}
-		});
-		*/
 		new Thread(new Runnable() {
 
 			@Override
@@ -120,12 +94,19 @@ public class UserIndex {
 				}
 			}
 		}).start();
+		
+		new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				for (int i = 0; i < messages.size(); i++) {
+					messagePanelList.get(i).addHeader(messages.get(i).getAuthor().getImage(), messages.get(i).getAuthor().getUsername());
+				}
+			}
+		}).start();
 
 	}
 
-	/**
-	 * Initialize the contents of the frame.
-	 */
 	private void initialize() {
 		frame = new JFrame();
 		frame.getContentPane().setBackground(Color.GRAY);
@@ -194,8 +175,6 @@ public class UserIndex {
 
 		updateMessage();
 		
-		//loadHead.start();
-		//loadImage.start();
 		frame.validate();
 		frame.repaint();
 
@@ -209,7 +188,6 @@ public class UserIndex {
 		updateButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				updateMessage();
-				//loadImage.start();
 			}
 		});
 
@@ -258,9 +236,7 @@ public class UserIndex {
 					}
 				}).start();
 			}
-		});
-		
-		
+		});	
 
 	}
 

@@ -34,9 +34,11 @@ public class MessagePanel extends JPanel {
 	URL imageUrl = null;
 	ImageIcon imageIcon = null;
 	ImageIcon headIcon = null;
+	
 	private JLabel usernameLabel = new JLabel();
 	GridBagConstraints gbc_lblNewLabel;
 	JLabel imageLabel = new JLabel();
+	
 	private Message myMessage = null;
 	/**
 	 * Create the panel.
@@ -74,8 +76,9 @@ public class MessagePanel extends JPanel {
 		//ImageIcon headIcon = new ImageIcon(headUrl);
 		headIcon = new ImageIcon(headUrl);
 		headIcon.setImage(headIcon.getImage().getScaledInstance(45, 45,Image.SCALE_DEFAULT));
+		
 		JLabel usernameLabel = new JLabel();
-		usernameLabel.setIcon(headIcon);
+		//usernameLabel.setIcon(headIcon);
 		
 		usernameLabel.setText(message.getAuthor().getUsername());
 		usernameLabel.setFont(new Font("微软雅黑", Font.BOLD, 16));
@@ -87,7 +90,7 @@ public class MessagePanel extends JPanel {
 		gbc_lblNewLabel.insets = new Insets(0, 0, 5, 0);
 		gbc_lblNewLabel.gridx = 0;
 		gbc_lblNewLabel.gridy = 0;
-		add(usernameLabel, gbc_lblNewLabel);
+		//add(usernameLabel, gbc_lblNewLabel);
 		
 		JTextArea txtrNml = new JTextArea();
 		txtrNml.setLineWrap(true);
@@ -108,15 +111,12 @@ public class MessagePanel extends JPanel {
 
 	}
 	
-	public void addHeader(String url) {
-		
-		try {
-			headUrl = new URL(url);
-		} catch (MalformedURLException e) {
-			e.printStackTrace();
+	public void addHeader(String url, String username) {
+		if(url.equals("")) {
+			return;
 		}
-		this.remove(usernameLabel);
-		headIcon = new ImageIcon(headUrl);
+		headIcon = Cache.getHeader(url, username);
+
 		headIcon.setImage(headIcon.getImage().getScaledInstance(45, 45,Image.SCALE_DEFAULT));
 		usernameLabel.setIcon(headIcon);
 		this.add(usernameLabel, gbc_lblNewLabel);
@@ -147,7 +147,6 @@ public class MessagePanel extends JPanel {
                 imageWindow.frame.setVisible(true);
 			}
 		});
-		
 		
 		add(imageLabel, gbc_imageLabel);
 	}

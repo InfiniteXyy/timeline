@@ -13,10 +13,10 @@ import javax.swing.ImageIcon;
 
 public class Cache {
 	private static void savePic(ImageIcon imageIcon, String path) {
-		//判断download文件夹是否存在
+		// 判断download文件夹是否存在
 		String dirPath = System.getProperty("user.dir") + "\\download\\";
 		File file = new File(dirPath);
-		if(!file.isDirectory()) {
+		if (!file.isDirectory()) {
 			file.mkdirs();
 		}
 		Image image = imageIcon.getImage();
@@ -32,25 +32,25 @@ public class Cache {
 			e.printStackTrace();
 		}
 	}
-	
+
 	private static boolean fileExist(String url) {
 		String[] parts = url.split("/");
-		String path = System.getProperty("user.dir") + "\\download\\" + 
-				parts[parts.length - 2] + "_" + parts[parts.length - 1];
+		String path = System.getProperty("user.dir") + "\\download\\" + parts[parts.length - 2] + "_"
+				+ parts[parts.length - 1];
 		File file = new File(path);
-		if(file.isFile()) {
+		if (file.isFile()) {
 			return true;
 		}
 		return false;
 	}
-	
+
 	public static ImageIcon getImageIcon(String url) {
 		URL imageUrl = null;
 		ImageIcon image = null;
 		String[] parts = url.split("/");
-		String path = System.getProperty("user.dir") + "\\download\\" + 
-				parts[parts.length - 2] + "_" + parts[parts.length - 1];
-		if(fileExist(url)) {
+		String path = System.getProperty("user.dir") + "\\download\\" + parts[parts.length - 2] + "_"
+				+ parts[parts.length - 1];
+		if (fileExist(url)) {
 			image = new ImageIcon(path);
 			return image;
 		}
@@ -62,5 +62,45 @@ public class Cache {
 		image = new ImageIcon(imageUrl);
 		savePic(image, path);
 		return image;
+	}
+
+	public static ImageIcon getHeader(String url, String username) {
+		URL imageUrl = null;
+		ImageIcon image = null;
+		String[] parts = url.split("/");
+		String path = System.getProperty("user.dir") + "\\header\\" + username + ".jpg";
+		if (new File(path).exists()) {
+			image = new ImageIcon(path);
+			return image;
+		}
+		try {
+			imageUrl = new URL(url);
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		}
+		image = new ImageIcon(imageUrl);
+		saveHeaderPic(image, path);
+		return image;
+	}
+
+	private static void saveHeaderPic(ImageIcon imageIcon, String path) {
+		// 判断header文件夹是否存在
+		String dirPath = System.getProperty("user.dir") + "\\header\\";
+		File file = new File(dirPath);
+		if (!file.isDirectory()) {
+			file.mkdirs();
+		}
+		Image image = imageIcon.getImage();
+		int w = image.getWidth(imageIcon.getImageObserver());
+		int h = image.getHeight(imageIcon.getImageObserver());
+		BufferedImage bi = new BufferedImage(w, h, BufferedImage.TYPE_3BYTE_BGR);
+		Graphics g = bi.getGraphics();
+		try {
+			g.drawImage(image, 0, 0, null);
+			// 将BufferedImage变量写入文件中。
+			ImageIO.write(bi, "jpg", new File(path));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }
