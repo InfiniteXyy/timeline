@@ -22,6 +22,6 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="D:/study/软件测试与验证/项目/project/timeline/client-desktop/TimelinePro/jar/SwingSets3(BeautyEyeLNFDemo).jar"/>
+	<classpathentry kind="lib" path="D:/软件测试与验证/timeline/client-desktop/TimelinePro/jar/SwingSets3(BeautyEyeLNFDemo).jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

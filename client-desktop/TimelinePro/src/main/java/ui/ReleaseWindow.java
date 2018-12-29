@@ -18,9 +18,12 @@ import control.MainControl;
 import entity.Message;
 import entity.Message.Author;
 import service.Service;
+import util.ImgUtil;
 
 import java.awt.GridBagConstraints;
 
+import javax.imageio.ImageWriteParam;
+import javax.imageio.ImageWriter;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -28,13 +31,16 @@ import javax.swing.JFileChooser;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.logging.Logger;
 
 import javax.swing.JPanel;
 
@@ -140,6 +146,15 @@ public class ReleaseWindow {
 				frame.getContentPane().add(imageLabel, gbc_image);
 				frame.validate();
 				frame.repaint();
+				
+				while(file.length() >= 1048576) {
+					try {
+						ImgUtil.compressPictureByQality(file, (float) 0.5);
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
 			}
 		});
 		
@@ -152,7 +167,6 @@ public class ReleaseWindow {
 				message.setCreatedAt(createdAt);
 				message.setBody(textArea.getText());
 				message.setUpdatedAt("");
-				
 				
 				/*
 				try {
@@ -206,11 +220,6 @@ public class ReleaseWindow {
 						
 					}
 				}).start();
-				/*
-				UserIndex.window.updateMessage();
-				UserIndex.window.loadHead.start();
-				UserIndex.window.loadImage.start();
-				*/
 			}
 		});
 		
@@ -227,5 +236,5 @@ public class ReleaseWindow {
 		});
 		
 	}
-
+	
 }

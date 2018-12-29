@@ -20,6 +20,8 @@ import java.util.List;
 import java.util.Vector;
 import javax.swing.ScrollPaneConstants;
 import org.json.JSONException;
+
+import control.MainControl;
 import entity.Message;
 import service.Service;
 
@@ -193,7 +195,6 @@ public class UserIndex {
 
 		loginButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("?");
 				Login login = new Login();
 				login.frmTimeline.setVisible(true);
 			}
