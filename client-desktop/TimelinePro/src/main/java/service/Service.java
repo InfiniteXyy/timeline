@@ -10,8 +10,6 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -23,12 +21,7 @@ import org.json.JSONObject;
 import entity.Message;
 import entity.User;
 import http.util.HttpUtil;
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
+
 
 public class Service {
 	
@@ -114,10 +107,10 @@ public class Service {
 		
 		try {
 			messageObj.put("body", message.getBody());
+			messageObj.put("imageUrl", message.getImageUrl());
 			param.put("message", messageObj);
 			headers.put("Authorization", "Bearer " + user.getToken());
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -206,6 +199,6 @@ public class Service {
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-		return "http://cdn.infinitex.cn/api" + path;
+		return "http://timeline.infinitex.cn/img" + path;
 	}
 }

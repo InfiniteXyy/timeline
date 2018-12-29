@@ -22,6 +22,8 @@ public class Cache {
 		Image image = imageIcon.getImage();
 		int w = image.getWidth(imageIcon.getImageObserver());
 		int h = image.getHeight(imageIcon.getImageObserver());
+		System.out.print(imageIcon + ":");
+		System.out.println(w + "  " + h);
 		BufferedImage bi = new BufferedImage(w, h, BufferedImage.TYPE_3BYTE_BGR);
 		Graphics g = bi.getGraphics();
 		try {
