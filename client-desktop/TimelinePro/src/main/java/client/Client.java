@@ -19,15 +19,8 @@ import org.json.JSONException;
 
 public class Client {
 	public static void main(String[] args) throws JSONException, ParseException {
-		
-		List <Message> messageList = new ArrayList<>();
-		messageList = Service.getAllMessages();
-		for(Message message : messageList) {
-			System.out.println(message.getImageUrl());
-			System.out.println("1");
-		}
-		
 		/*
+		
 		String result = HttpUtil.sendGet("http://timeline.infinitex.cn/api/messages");
 		//System.out.println(result);
 		JSONObject jsonObj = new JSONObject(result);

@@ -23,12 +23,6 @@ import org.json.JSONObject;
 import entity.Message;
 import entity.User;
 import http.util.HttpUtil;
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
 
 public class Service {
 	
@@ -36,6 +30,26 @@ public class Service {
 	
 	public static List<Message> getAllMessages() throws JSONException {
 		String result = HttpUtil.sendGet(apiUrl + "/api/messages?limit=20");
+		JSONObject jsonObj = new JSONObject(result);
+		JSONArray messages = new JSONArray(jsonObj.getString("messages"));
+		List <Message> messageList = new ArrayList<Message>();
+		
+		for(int i = 0; i < messages.length(); i++) {
+			JSONObject message = messages.getJSONObject(i);
+			String createdAt = message.getString("createdAt");
+			JSONObject authorObj = message.getJSONObject("author");
+			int id = message.getInt("id");
+			String body = message.getString("body");
+			String updatedAt = message.getString("updatedAt");
+			String imageUrl = message.getString("imageUrl");
+			messageList.add(new Message(createdAt, id, body, updatedAt, authorObj.getString("image"), authorObj.getString("username"), imageUrl));
+		}
+		Collections.sort(messageList);
+		return messageList;
+	}
+	
+	public static List<Message> getMessagesFrom(int limit, String fromTime) throws JSONException {
+		String result = HttpUtil.sendGet(apiUrl + "/api/messages?limit=" + limit + "&from=" + fromTime);
 		JSONObject jsonObj = new JSONObject(result);
 		JSONArray messages = new JSONArray(jsonObj.getString("messages"));
 		List <Message> messageList = new ArrayList<Message>();
@@ -114,6 +128,7 @@ public class Service {
 		
 		try {
 			messageObj.put("body", message.getBody());
+			messageObj.put("imageUrl", message.getImageUrl());
 			param.put("message", messageObj);
 			headers.put("Authorization", "Bearer " + user.getToken());
 		} catch (JSONException e) {
@@ -206,6 +221,6 @@ public class Service {
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-		return "http://cdn.infinitex.cn/api" + path;
+		return "http://timeline.infinitex.cn/img" + path;
 	}
 }

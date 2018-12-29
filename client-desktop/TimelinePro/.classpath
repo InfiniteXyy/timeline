@@ -22,6 +22,8 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="D:/study/软件测试与验证/项目/project/timeline/client-desktop/TimelinePro/jar/SwingSets3(BeautyEyeLNFDemo).jar"/>
+	<classpathentry kind="lib" path="D:/Java/Timeline/joda-time-2.9.4.jar"/>
+	<classpathentry kind="lib" path="D:/Java/Timeline/SwingSets3(BeautyEyeLNFDemo).jar"/>
+	<classpathentry kind="lib" path="D:/Tomcat9.0/lib/mysql-connector-java-5.1.44-bin.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
