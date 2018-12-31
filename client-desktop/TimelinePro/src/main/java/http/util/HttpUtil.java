@@ -2,8 +2,6 @@ package http.util;
 
 import java.io.IOException;
 import java.util.Map;
-
-import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -47,32 +45,6 @@ public class HttpUtil {
 		}
 		return result;
 	}
-	
-	/*
-	public static String sendPost(String url, Map<String, String> map) {
-		List<NameValuePair> formparams = new ArrayList<NameValuePair>();
-		for (Map.Entry<String, String> entry : map.entrySet()) {
-			formparams.add(new BasicNameValuePair(entry.getKey(), entry.getValue()));
-		}
-		UrlEncodedFormEntity entity = new UrlEncodedFormEntity(formparams, Consts.UTF_8);
-		HttpPost httppost = new HttpPost(url);
-		httppost.setEntity(entity);
-		CloseableHttpResponse response = null;
-		try {
-			response = httpclient.execute(httppost);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		HttpEntity entity1 = response.getEntity();
-		String result = null;
-		try {
-			result = EntityUtils.toString(entity1);
-		} catch (ParseException | IOException e) {
-			e.printStackTrace();
-		}
-		return result;
-	}
-	*/
 	
 	public static JSONObject sendPost(String url,JSONObject json){
 	    HttpPost post = new HttpPost(url);

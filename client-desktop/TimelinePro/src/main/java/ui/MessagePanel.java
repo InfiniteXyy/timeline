@@ -1,37 +1,27 @@
 package ui;
 
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-
 import entity.Message;
 import util.Cache;
-
 import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.net.MalformedURLException;
-import java.net.URL;
-
 import javax.swing.JTextArea;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.Color;
-import java.awt.Component;
-import javax.swing.Box;
+
 
 public class MessagePanel extends JPanel {
 
-	URL headUrl = null;
-	URL imageUrl = null;
+	//URL headUrl = null;
+	//URL imageUrl = null;
 	ImageIcon imageIcon = null;
 	ImageIcon headIcon = null;
 	
@@ -39,13 +29,11 @@ public class MessagePanel extends JPanel {
 	GridBagConstraints gbc_lblNewLabel;
 	JLabel imageLabel = new JLabel();
 	
-	private Message myMessage = null;
 	/**
 	 * Create the panel.
 	 */
 	public MessagePanel(Message message) {
-		myMessage = message;
-		setBackground(Color.WHITE);
+		//setBackground(Color.GRAY);
 		GridBagLayout gridBagLayout = null;
 		
 		if(!message.getImageUrl().equals("")) {
@@ -67,23 +55,24 @@ public class MessagePanel extends JPanel {
 		}
 		
 		
+		/*
 		try {
 			headUrl = new URL(message.getAuthor().getImage());
 		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 		//ImageIcon headIcon = new ImageIcon(headUrl);
 		headIcon = new ImageIcon(headUrl);
 		headIcon.setImage(headIcon.getImage().getScaledInstance(45, 45,Image.SCALE_DEFAULT));
-		
+		*/
 		JLabel usernameLabel = new JLabel();
 		//usernameLabel.setIcon(headIcon);
 		
 		usernameLabel.setText(message.getAuthor().getUsername());
 		usernameLabel.setFont(new Font("微软雅黑", Font.BOLD, 16));
 		usernameLabel.setForeground(Color.BLACK);
-		usernameLabel.setBackground(Color.WHITE);
+		//usernameLabel.setBackground(Color.GRAY);
 		usernameLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		gbc_lblNewLabel = new GridBagConstraints();
 		gbc_lblNewLabel.anchor = GridBagConstraints.WEST;
@@ -98,6 +87,9 @@ public class MessagePanel extends JPanel {
 		txtrNml.setPreferredSize(new Dimension(350, 50));
 		txtrNml.setText(message.getBody() + "\n" + message.getTimeString());
 		txtrNml.setEditable(false);
+		
+		//txtrNml.setBackground(new Color(110, 110, 100));
+		
 		GridBagConstraints gbc_txtrNml = new GridBagConstraints();
 		gbc_txtrNml.insets = new Insets(0, 0, 5, 0);
 		gbc_txtrNml.fill = GridBagConstraints.BOTH;

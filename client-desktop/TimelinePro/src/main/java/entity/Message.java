@@ -4,7 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.joda.time.DateTime;
-public class Message implements Comparable {
+public class Message {
 	private String createdAt = null;
 	private int id;
 	private String body = null;
@@ -151,13 +151,4 @@ public class Message implements Comparable {
 			this.username = username;
 		}
 	}
-
-
-
-	@Override
-	public int compareTo(Object o) {
-		Date d = DateTime.parse(this.createdAt).toDate();
-		Date d2 = DateTime.parse(((Message)o).getCreatedAt()).toDate();
-		return d2.compareTo(d);
-	};
 }

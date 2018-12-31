@@ -3,6 +3,7 @@ package ui;
 import javax.swing.JFrame;
 import java.awt.GridBagLayout;
 import javax.swing.JPanel;
+import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import java.awt.GridBagConstraints;
 import javax.swing.JLabel;
@@ -15,10 +16,13 @@ import java.awt.Font;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.AdjustmentEvent;
+import java.awt.event.AdjustmentListener;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.ScrollPaneConstants;
 import org.json.JSONException;
+import control.MainControl;
 import entity.Message;
 import service.Service;
 
@@ -41,6 +45,7 @@ public class UserIndex {
 	public JButton updateButton = null;
 	JButton moreMessageButton = null;
 	
+	public JButton logoutButton = null;
 	public JLabel headLebal = new JLabel();
 
 	public static void main(String[] args) {
@@ -50,11 +55,9 @@ public class UserIndex {
 
 	public UserIndex() {
 		
-		
 		try { org.jb2011.lnf.beautyeye.BeautyEyeLNFHelper.launchBeautyEyeLNF(); }
 		 catch(Exception e) {}
 		 
-		
 		initialize();
 	}
 
@@ -81,19 +84,12 @@ public class UserIndex {
 			public void run() {
 				for (int i = 0; i < messages.size(); i++) {
 					messagePanelList.get(i).addImage(messages.get(i).getImageUrl());
-				}
-			}
-		}).start();
-		
-		new Thread(new Runnable() {
-			@Override
-			public void run() {
-				for (int i = 0; i < messages.size(); i++) {
 					messagePanelList.get(i).addHeader(messages.get(i).getAuthor().getImage(), messages.get(i).getAuthor().getUsername());
 				}
+				frame.validate();
+				frame.repaint();
 			}
 		}).start();
-
 	}
 
 	private void initialize() {
@@ -136,6 +132,9 @@ public class UserIndex {
 		loginButton.setPreferredSize(new Dimension(75, 35));
 		userPanel.add(loginButton);
 		
+		logoutButton = new JButton("注销");
+		logoutButton.setFont(new Font("微软雅黑", Font.PLAIN, 12));
+		logoutButton.setPreferredSize(new Dimension(75, 35));
 
 		panel = new JPanel();
 		panel.setBackground(Color.GRAY);
@@ -190,6 +189,17 @@ public class UserIndex {
 			}
 		});
 		
+		logoutButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				MainControl.user = null;
+				userPanel.remove(headLebal);
+				userPanel.remove(logoutButton);
+				userPanel.add(loginButton);
+				userPanel.validate();
+				userPanel.repaint();
+			}
+		});
+		
 		moreMessageButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				List<Message> oldMessages = null;
@@ -210,20 +220,13 @@ public class UserIndex {
 					public void run() {
 						for(int i = oldLength; i < messages.size(); i++) {
 							messagePanelList.get(i).addImage(messages.get(i).getImageUrl());
-						}
-					}
-				}).start();
-				
-				new Thread(new Runnable() {
-					@Override
-					public void run() {
-						for(int i = oldLength; i < messages.size(); i++) {
 							messagePanelList.get(i).addHeader(messages.get(i).getAuthor().getImage(), messages.get(i).getAuthor().getUsername());
 						}
+						frame.validate();
+						frame.repaint();
 					}
 				}).start();
 			}
 		});	
 	}
-
 }

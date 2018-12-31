@@ -44,7 +44,6 @@ public class Cache {
 		
 		
 		URL url = null;
-		int imageNumber = 0;
 
 		try {
 			url = new URL(urlList);
@@ -61,7 +60,6 @@ public class Cache {
 			while ((length = dataInputStream.read(buffer)) > 0) {
 				output.write(buffer, 0, length);
 			}
-			byte[] context = output.toByteArray();
 			fileOutputStream.write(output.toByteArray());
 			dataInputStream.close();
 			fileOutputStream.close();
@@ -84,7 +82,6 @@ public class Cache {
 	}
 
 	public static ImageIcon getImageIcon(String url) {
-		URL imageUrl = null;
 		ImageIcon image = null;
 		String[] parts = url.split("/");
 		String path = System.getProperty("user.dir") + "\\download\\" + parts[parts.length - 2] + "_"
@@ -99,9 +96,7 @@ public class Cache {
 	}
 
 	public static ImageIcon getHeader(String url, String username) {
-		URL imageUrl = null;
 		ImageIcon image = null;
-		String[] parts = url.split("/");
 		String path = System.getProperty("user.dir") + "\\header\\" + username + ".jpg";
 		if (new File(path).exists()) {
 			image = new ImageIcon(path);
@@ -136,7 +131,6 @@ public class Cache {
 			while ((length = dataInputStream.read(buffer)) > 0) {
 				output.write(buffer, 0, length);
 			}
-			byte[] context = output.toByteArray();
 			fileOutputStream.write(output.toByteArray());
 			dataInputStream.close();
 			fileOutputStream.close();

@@ -12,7 +12,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -44,7 +43,6 @@ public class Service {
 			String imageUrl = message.getString("imageUrl");
 			messageList.add(new Message(createdAt, id, body, updatedAt, authorObj.getString("image"), authorObj.getString("username"), imageUrl));
 		}
-		//Collections.sort(messageList);
 		return messageList;
 	}
 	
@@ -65,7 +63,6 @@ public class Service {
 			String imageUrl = message.getString("imageUrl");
 			messageList.add(new Message(createdAt, id, body, updatedAt, authorObj.getString("image"), authorObj.getString("username"), imageUrl));
 		}
-		//Collections.sort(messageList);
 		return messageList;
 	}
 	
@@ -114,7 +111,6 @@ public class Service {
 			userObj.put("password", user.getPassword());
 			param.put("user", userObj);
 		} catch (JSONException e) {
-
 			e.printStackTrace();
 		}
 		
