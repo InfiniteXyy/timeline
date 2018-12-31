@@ -39,6 +39,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URLEncoder;
+import java.nio.file.Files;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Logger;
@@ -56,6 +57,7 @@ public class ReleaseWindow {
 	private ImageIcon image = null;
 	private JLabel imageLabel = null;
 	private File file = null;
+	private File fileClone = null;
 
 	/**
 	 * Launch the application.
@@ -125,9 +127,9 @@ public class ReleaseWindow {
 				JFileChooser jfc = new JFileChooser();  
 		        jfc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES );  
 		        jfc.showDialog(new JLabel(), "选择");  
-		        file = jfc.getSelectedFile(); 
-				if(file == null) return ;
-				Image image2;
+		        file = jfc.getSelectedFile();
+		        if(file == null) return ;
+		        Image image2;
 				try {
 					image2 = ImageIO.read(file);
 					if(image2 == null) {
@@ -135,11 +137,21 @@ public class ReleaseWindow {
 						return ;
 					}		
 				} catch (IOException e2) {
-					JOptionPane.showMessageDialog(null, "文件格式错误", "", JOptionPane.ERROR_MESSAGE);
+					//JOptionPane.showMessageDialog(null, "?", "", JOptionPane.ERROR_MESSAGE);
 					return ;
 				}
 				
-
+				
+		        //fileClone = new File(System.getProperty("user.dir") + "\\1.jpg");
+		        
+		        /*
+		        try {
+					Files.copy(file.toPath(), fileClone.toPath());
+				} catch (IOException e3) {
+					// TODO Auto-generated catch block
+					e3.printStackTrace();
+				}
+		        */
 				try {
 					image = new ImageIcon(file.toURL());
 				} catch (MalformedURLException e1) {
@@ -161,14 +173,17 @@ public class ReleaseWindow {
 				frame.validate();
 				frame.repaint();
 				
-				while(file.length() >= 1048576) {
+				/*
+				if(fileClone.length() >= 1048576) {
+					float rate = 1000000 / fileClone.length();
 					try {
-						ImgUtil.compressPictureByQality(file, (float) 0.5);
+						ImgUtil.compressPictureByQality(fileClone, rate);
 					} catch (IOException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
 				}
+				*/
 			}
 		});
 		
@@ -212,6 +227,14 @@ public class ReleaseWindow {
 						
 						if(Service.createMessage(MainControl.user, message)) {
 							frame.dispose();
+							/*
+							try {
+								Files.delete(fileClone.toPath());
+							} catch (IOException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+							*/
 						} else {
 							frame.dispose();
 							JOptionPane.showMessageDialog(null, "发布失败", "", JOptionPane.ERROR_MESSAGE);
