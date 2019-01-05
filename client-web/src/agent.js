@@ -16,6 +16,10 @@ const tokenPlugin = req => {
   }
 };
 
+const uploadToken = req => {
+  req.set('authorization', 'bearer ILoveInfinitex.cn');
+};
+
 const requests = {
   del: url =>
     superagent
@@ -49,17 +53,27 @@ const Auth = {
   current: () => requests.get('/user'),
   save: user => requests.put('/user', { user }),
   login: (email, password) => requests.post('/users/login', { user: { email, password } }),
-  register: (email, username, password) => requests.post('/users', { user: { email, username, password } })
+  register: (email, username, password) =>
+    requests.post('/users', { user: { email, username, password } })
 };
 
 const Profile = {
   get: username => requests.get(`/profiles/${encode(username)}`)
 };
 
+const Upload = {
+  image: body =>
+    superagent
+      .post(`/cdn/api/upload`, body)
+      .use(uploadToken)
+      .then(responseBody)
+};
+
 export default {
   Message,
   Auth,
   Profile,
+  Upload,
   setToken: _token => {
     token = _token;
   }

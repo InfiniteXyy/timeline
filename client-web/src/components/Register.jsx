@@ -1,15 +1,18 @@
 import React from 'react';
-import { LOGIN } from '../constants/actionTypes';
-import agent from '../agent';
+import { arrayOf, bool, object, func } from 'prop-types';
+
 import { connect } from 'react-redux';
+import { REGISTER } from '../constants/actionTypes';
+import agent from '../agent';
 import ErrorList from './common/ErrorList';
 
-class Login extends React.Component {
+class Register extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       password: '',
-      email: ''
+      email: '',
+      username: ''
     };
     this.setPassword = ev => {
       this.setState({ password: ev.target.value });
@@ -17,21 +20,26 @@ class Login extends React.Component {
     this.setEmail = ev => {
       this.setState({ email: ev.target.value });
     };
+    this.setUsername = ev => {
+      this.setState({ username: ev.target.value });
+    };
     this.handleSubmit = ev => {
+      const { email, username, password } = this.state;
       ev.preventDefault();
-      props.onSubmitLogin(this.state.email, this.state.password);
+      props.onSubmitRegister(email, username, password);
     };
   }
 
   render() {
+    const { errors } = this.props;
     return (
       <div className="login-form" onSubmit={this.handleSubmit}>
         <div className="main-div">
           <div className="panel">
-            <h2>登录你的账户</h2>
+            <h2>注册新的账户</h2>
             <p>请输入邮箱地址和对应的密码</p>
           </div>
-          <ErrorList errors={this.props.errors} />
+          <ErrorList errors={errors} />
           <form id="Login">
             <div className="form-group">
               <input
@@ -45,6 +53,16 @@ class Login extends React.Component {
 
             <div className="form-group">
               <input
+                type="text"
+                className="form-control"
+                id="inputUsername"
+                placeholder="用户名"
+                onChange={this.setUsername}
+              />
+            </div>
+
+            <div className="form-group">
+              <input
                 type="password"
                 className="form-control"
                 id="inputPassword"
@@ -52,8 +70,9 @@ class Login extends React.Component {
                 onChange={this.setPassword}
               />
             </div>
-            <button type="submit" className="btn btn-primary">
-              {this.props.inProgress ? <div className="loader " /> : <span>登录</span>}
+
+            <button type="submit" className="btn btn-primary" style={{ marginTop: 30 }}>
+              {this.props.inProgress ? <div className="loader " /> : <span>注册</span>}
             </button>
           </form>
         </div>
@@ -62,16 +81,23 @@ class Login extends React.Component {
   }
 }
 
+Register.propTypes = {
+  errors: arrayOf(object),
+  inProgress: bool.isRequired,
+  onSubmitRegister: func.isRequired
+};
+
 const mapStateToProps = state => ({
   inProgress: state.home.inProgress,
   errors: state.home.errors
 });
 
 const mapDispatchToProps = dispatch => ({
-  onSubmitLogin: (email, password) => dispatch({ type: LOGIN, payload: agent.Auth.login(email, password) })
+  onSubmitRegister: (email, username, password) =>
+    dispatch({ type: REGISTER, payload: agent.Auth.register(email, username, password) })
 });
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Login);
+)(Register);
