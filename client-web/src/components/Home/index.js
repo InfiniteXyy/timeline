@@ -77,7 +77,7 @@ class Home extends React.Component {
           })
             .then(response => response.json())
             .then(res => {
-              this.setState({ imageUrl: 'http://cdn.infinitex.cn/api' + res.data.path });
+              this.setState({ imageUrl: 'http://timeline.infinitex.cn/img' + res.data.path });
             })
             .catch(e => {
               alert('upload error');

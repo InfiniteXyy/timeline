@@ -3,6 +3,9 @@ package com.ecnu.testcourse.timeline.api.request;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import javax.validation.constraints.Email;
 
+/**
+ * @author xuyiyang
+ */
 @JsonRootName("user")
 public class UpdateUserParam {
 

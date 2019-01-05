@@ -5,13 +5,13 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
-public class SimpleEncryptServiceTest {
+public class SimpleEncryptImplTest {
 
-  private SimpleEncryptService encryptService;
+  private SimpleEncryptImpl encryptService;
 
   @Before
   public void setUp() {
-    encryptService = new SimpleEncryptService();
+    encryptService = new SimpleEncryptImpl();
   }
 
   @Test

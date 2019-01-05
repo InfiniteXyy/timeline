@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * @author xuyiyang
+ */
 @RestController
 @RequestMapping("api/profile/{username}")
 public class ProfileApi {
@@ -29,7 +32,7 @@ public class ProfileApi {
     Optional<User> optionalUser = userRepository.findByUsername(username);
     if (!optionalUser.isPresent()) {
       return ResponseEntity.status(404)
-          .body(ValidationHandler.wrapErrorRoot(new HashMap<String, Object>() {{
+          .body(ValidationHandler.wrapErrorRoot(new HashMap<String, Object>(16) {{
             put("username", "not found");
           }}));
     } else {

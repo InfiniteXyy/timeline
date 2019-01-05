@@ -24,6 +24,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * @author xuyiyang
+ */
 @RestController
 @RequestMapping("api/messages")
 public class MessageApi {
@@ -45,7 +48,7 @@ public class MessageApi {
       @RequestParam(value = "from", defaultValue = "") String from) {
 
     List<Message> messageList;
-    if (!from.equals("")) {
+    if (!"".equals(from)) {
       try {
         DateTime dt = DateTime.parse(from, ISODateTimeFormat.dateTimeParser());
         messageList = messageRepository.findTopMessagesSince(limit, dt.toString());

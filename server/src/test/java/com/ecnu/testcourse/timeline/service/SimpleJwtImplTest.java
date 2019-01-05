@@ -6,15 +6,15 @@ import com.ecnu.testcourse.timeline.models.user.User;
 import org.junit.Before;
 import org.junit.Test;
 
-public class SimpleJwtServiceTest {
+public class SimpleJwtImplTest {
 
-  private SimpleJwtService jwtService;
+  private SimpleJwtImpl jwtService;
 
   private User user;
 
   @Before
   public void setUp() {
-    jwtService = new SimpleJwtService();
+    jwtService = new SimpleJwtImpl();
     user = new User("xyy@xyy.x", "xyy", "123", "");
   }
 

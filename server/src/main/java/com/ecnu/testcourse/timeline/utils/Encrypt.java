@@ -6,6 +6,9 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 import org.apache.tomcat.util.codec.binary.Base64;
 
+/**
+ * @author xuyiyang
+ */
 public class Encrypt {
 
   public static String encrypt(String key, String initVector, String value) {

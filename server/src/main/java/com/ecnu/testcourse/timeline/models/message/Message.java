@@ -6,6 +6,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import org.joda.time.DateTime;
 
+/**
+ * @author xuyiyang
+ */
 @Entity
 public class Message {
 

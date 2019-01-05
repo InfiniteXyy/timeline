@@ -5,6 +5,9 @@ import com.ecnu.testcourse.timeline.models.user.User;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * @author xuyiyang
+ */
 public class MessageData {
 
   private User author;
@@ -16,13 +19,13 @@ public class MessageData {
   }
 
   public Map<String, Object> getData() {
-    return new HashMap<String, Object>() {{
+    return new HashMap<String, Object>(16) {{
       put("id", message.getId());
       put("body", message.getBody());
       put("createdAt", message.getCreatedAt());
       put("updatedAt", message.getUpdatedAt());
       put("imageUrl", message.getImageUrl());
-      put("author", new HashMap<String, Object>() {{
+      put("author", new HashMap<String, Object>(16) {{
         put("username", author.getUsername());
         put("image", author.getImage());
       }});
@@ -30,7 +33,7 @@ public class MessageData {
   }
 
   public Map<String, Object> getWrappedData() {
-    return new HashMap<String, Object>() {{
+    return new HashMap<String, Object>(16) {{
       put("message", getData());
     }};
   }

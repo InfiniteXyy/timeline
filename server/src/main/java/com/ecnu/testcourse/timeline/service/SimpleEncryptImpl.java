@@ -7,8 +7,11 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 import org.springframework.stereotype.Service;
 
+/**
+ * @author xuyiyang
+ */
 @Service
-public class SimpleEncryptService implements EncryptService {
+public class SimpleEncryptImpl implements EncryptService {
 
   private String initVector = "Bar12345Bar12345";
   private String key = "Timelinexyyxyyxy";
