@@ -3,6 +3,7 @@ package com.ecnu.testcourse.timeline.api;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
@@ -15,7 +16,6 @@ import io.restassured.module.mockmvc.RestAssuredMockMvc;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -53,7 +53,8 @@ public class MessageApiTest {
     when(messageRepository.findTopMessages(anyInt())).thenReturn(Collections.singletonList(
         new Message("haha", "", demoUser.getId())
     ));
-    when(userRepository.findById(demoUser.getId())).thenReturn(Optional.of(demoUser));
+    when(userRepository.findByIdIn(Collections.singletonList(demoUser.getId()))).thenReturn(
+        Collections.singletonList(demoUser));
 
     RestAssuredMockMvc.when()
         .get("/api/messages")
@@ -70,8 +71,8 @@ public class MessageApiTest {
     when(messageRepository.findTopMessages(limit)).thenReturn(Collections.nCopies(limit,
         new Message("haha", "", demoUser.getId())
     ));
-    when(userRepository.findById(demoUser.getId())).thenReturn(Optional.of(demoUser));
-
+    when(userRepository.findByIdIn(anyList())).thenReturn(
+        Collections.singletonList(demoUser));
     RestAssuredMockMvc.when()
         .get("/api/messages?limit={limit}", limit)
         .prettyPeek()
@@ -87,8 +88,8 @@ public class MessageApiTest {
         .thenReturn(Collections.singletonList(
             new Message("haha", "", demoUser.getId())
         ));
-    when(userRepository.findById(demoUser.getId())).thenReturn(Optional.of(demoUser));
-
+    when(userRepository.findByIdIn(Collections.singletonList(demoUser.getId()))).thenReturn(
+        Collections.singletonList(demoUser));
     RestAssuredMockMvc.when()
         .get("/api/messages?from={offset}", offset)
         .prettyPeek()

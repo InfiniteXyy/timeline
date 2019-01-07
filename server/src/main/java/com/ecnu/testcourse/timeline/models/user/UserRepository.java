@@ -1,5 +1,6 @@
 package com.ecnu.testcourse.timeline.models.user;
 
+import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -32,5 +33,14 @@ public interface UserRepository extends JpaRepository<User, Long> {
    * @return OptionUser
    */
   Optional<User> findByUsername(String username);
+
+
+  /**
+   * 根据id列表返回用户列表
+   *
+   * @param ids id列表
+   * @return 用户列表
+   */
+  List<User> findByIdIn(List<Long> ids);
 
 }

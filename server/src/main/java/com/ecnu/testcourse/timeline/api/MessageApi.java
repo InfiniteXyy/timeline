@@ -10,7 +10,10 @@ import com.ecnu.testcourse.timeline.models.user.User;
 import com.ecnu.testcourse.timeline.models.user.UserRepository;
 import com.ecnu.testcourse.timeline.service.Auth;
 import com.ecnu.testcourse.timeline.utils.ValidationHandler;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 import javax.validation.Valid;
 import org.joda.time.DateTime;
 import org.joda.time.format.ISODateTimeFormat;
@@ -52,7 +55,6 @@ public class MessageApi {
       try {
         DateTime dt = DateTime.parse(from, ISODateTimeFormat.dateTimeParser());
         messageList = messageRepository.findTopMessagesSince(limit, dt.toString());
-
       } catch (Exception e) {
         return ResponseEntity.status(422)
             .body(ValidationHandler.wrapErrorRoot(object("time", "wrong format")));
@@ -61,12 +63,21 @@ public class MessageApi {
       messageList = messageRepository.findTopMessages(limit);
     }
 
-    return ResponseEntity.ok(object("messages",
-        messageList.stream().map((message ->
-            new MessageData(
-                userRepository.findById(message.getUserId()).get(),
-                message).getData())
-        )));
+    List<User> authors = userRepository
+        .findByIdIn(messageList.stream().map(Message::getUserId).collect(Collectors.toList()));
+    List<Map<String, Object>> result = new ArrayList<>();
+    for (Message message : messageList) {
+      User user = null;
+      for (User temp : authors) {
+        if (temp.getId() == message.getUserId()) {
+          user = temp;
+          break;
+        }
+      }
+      result.add(new MessageData(user, message).getData());
+    }
+
+    return ResponseEntity.ok(object("messages", result));
   }
 
   @RequestMapping(method = RequestMethod.POST)
