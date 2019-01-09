@@ -1,5 +1,5 @@
 import React from 'react';
-import { func } from 'prop-types';
+import { func, Requireable as object } from 'prop-types';
 
 import Container from 'react-bootstrap/lib/Container';
 import Row from 'react-bootstrap/lib/Row';
@@ -17,10 +17,11 @@ class App extends React.Component {
   // 在启动 App 查看是否有保存着的token
   componentWillMount() {
     const token = window.localStorage.getItem('jwt');
+    const { onLoad } = this.props;
     if (token) {
       agent.setToken(token);
     }
-    this.props.onLoad(token ? agent.Auth.current() : null, token);
+    onLoad(token ? agent.Auth.current() : null, token);
   }
 
   render() {
@@ -41,7 +42,8 @@ class App extends React.Component {
 }
 
 App.propTypes = {
-  onLoad: func.isRequired
+  onLoad: func.isRequired,
+  user: object.isRequired
 };
 const mapDispatchToProps = dispatch => ({
   onLoad: (payload, token) => dispatch({ type: APP_LOAD, payload, token })

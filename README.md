@@ -14,7 +14,7 @@ Make sure the right content type like `Content-Type: application/json; charset=u
 {
    "user": {
       "email": "infiniteXyy@gmail.com",
-      "token": "jwt.token.here",
+      "token": "tokenhere",
       "username": "infiniteXyy",
       "image": null
    }
@@ -27,7 +27,7 @@ Make sure the right content type like `Content-Type: application/json; charset=u
 {
   "profile": {
     "username": "pikachu",
-    "image": "http://cdn.infinitex.cn/images/pikachu.jpg",
+    "image": "http://timeline.infinitex.cn/img/66/125fe2f631e9336ec26ca88e8073fc.png",
   }
 }
 ```
@@ -41,10 +41,10 @@ Make sure the right content type like `Content-Type: application/json; charset=u
       "body": "It was fun.",
       "createdAt": "2018-12-11T11:04:34.359Z",
       "updatedAt": "2018-12-12T11:04:34.359Z",
-      "imageUrl": "http://cdn.infinitex.cn/51/12342341.png",
+      "imageUrl": "http://timeline.infinitex.cn/img/66/125fe2f631e9336ec26ca88e8073fc.png",
       "author": {
          "username": "pikachu",
-         "image": "http://cdn.infinitex.cn/images/pikachu.jpg",
+         "image": "http://timeline.infinitex.cn/img/66/125fe2f631e9336ec26ca88e8073fc.png",
       }
    }
 }
@@ -59,10 +59,10 @@ Make sure the right content type like `Content-Type: application/json; charset=u
       "body": "It was fun.",
       "createdAt": "2018-12-11T11:04:34.359Z",
       "updatedAt": "2018-12-12T11:04:34.359Z",
-      "imageUrl": "http://cdn.infinitex.cn/51/12342341.png",
+      "imageUrl": "http://timeline.infinitex.cn/img/66/125fe2f631e9336ec26ca88e8073fc.png",
       "author": {
          "username": "pikachu",
-         "image": "http://cdn.infinitex.cn/images/pikachu.jpg",
+         "image": "http://timeline.infinitex.cn/img/66/125fe2f631e9336ec26ca88e8073fc.png",
       }
    }],
    "messagesCount": 1
@@ -174,7 +174,7 @@ Example request body:
 {
    "message": {
       "body": "I am so FAT!",
-      "imageUrl": "http://cdn.infintiex.cn/forexample.png"
+      "imageUrl": "http://timeline.infinitex.cn/img/66/125fe2f631e9336ec26ca88e8073fc.png"
    }
 }
 ```

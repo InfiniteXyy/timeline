@@ -74,7 +74,9 @@ public class MessageApi {
           break;
         }
       }
-      result.add(new MessageData(user, message).getData());
+      if (user != null) {
+        result.add(new MessageData(user, message).getData());
+      }
     }
 
     return ResponseEntity.ok(object("messages", result));

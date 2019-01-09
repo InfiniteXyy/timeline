@@ -31,7 +31,7 @@ class Register extends React.Component {
   }
 
   render() {
-    const { errors } = this.props;
+    const { errors, inProgress } = this.props;
     return (
       <div className="login-form" onSubmit={this.handleSubmit}>
         <div className="main-div">
@@ -72,7 +72,7 @@ class Register extends React.Component {
             </div>
 
             <button type="submit" className="btn btn-primary" style={{ marginTop: 30 }}>
-              {this.props.inProgress ? <div className="loader " /> : <span>注册</span>}
+              {inProgress ? <div className="loader " /> : <span>注册</span>}
             </button>
           </form>
         </div>
