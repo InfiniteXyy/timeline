@@ -127,9 +127,12 @@ public class ReleaseWindow {
 				JFileChooser jfc = new JFileChooser();  
 		        jfc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES );  
 		        jfc.showDialog(new JLabel(), "选择");  
-		        file = jfc.getSelectedFile();
-		        if(file == null) return ;
-		        Image image2;
+		        file = jfc.getSelectedFile(); 
+		        //未选择文件
+				if(file == null) return ;
+				
+				//判断是否为图片文件
+				Image image2;
 				try {
 					image2 = ImageIO.read(file);
 					if(image2 == null) {
@@ -138,6 +141,7 @@ public class ReleaseWindow {
 					}		
 				} catch (IOException e2) {
 					//JOptionPane.showMessageDialog(null, "?", "", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null, "?", "", JOptionPane.ERROR_MESSAGE);
 					return ;
 				}
 				
@@ -155,9 +159,9 @@ public class ReleaseWindow {
 				try {
 					image = new ImageIcon(file.toURL());
 				} catch (MalformedURLException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
+				
 				double setsize = (double)image.getIconWidth() / image.getIconHeight();
 				image.setImage(image.getImage().getScaledInstance((int)(150 * setsize), 150, Image.SCALE_DEFAULT));
 				imageLabel = new JLabel(image);
@@ -176,6 +180,7 @@ public class ReleaseWindow {
 				/*
 				if(fileClone.length() >= 1048576) {
 					float rate = 1000000 / fileClone.length();
+				while(file.length() >= 1048576) {
 					try {
 						ImgUtil.compressPictureByQality(fileClone, rate);
 					} catch (IOException e1) {

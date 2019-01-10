@@ -6,20 +6,17 @@ import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.net.MalformedURLException;
 import java.net.URL;
-
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-
 import java.awt.Font;
 import javax.swing.SwingConstants;
+import javax.swing.WindowConstants;
+
 import control.MainControl;
 import entity.User;
 import service.Service;
-
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
@@ -32,6 +29,7 @@ import java.awt.SystemColor;
 public class Login {
 
 	public JFrame frmTimeline;
+	
 	public JPanel panel_3 = null;
 	public JPanel panel = null;
 	public JLabel lblNewLabel = null;
@@ -39,38 +37,15 @@ public class Login {
 	public JPanel panel_1 = null;
 	public JLabel passwordLabel = null;
 	public JPanel panel_2 = null;
+	
 	public JButton loginButton = null;
 	public JButton registerButton = null;
 	public URL headUrl = null;
 	private JTextField email;
 	private JPasswordField password;
 
-	/**
-	 * Launch the application.
-	
-	public static void main(String[] args) {
-		
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Login window = new Login();
-					window.frmTimeline.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-		
-		Login window = new Login();
-		window.frmTimeline.setVisible(true);
-		
-	}
-	 */
-	/**	
-	 * Create the application.
-	 */
 	public Login() {
-		
+		/*
 		try
 	    {
 	        org.jb2011.lnf.beautyeye.BeautyEyeLNFHelper.launchBeautyEyeLNF();
@@ -79,20 +54,18 @@ public class Login {
 	    {
 	        //TODO exception
 	    }
-	    
+	    */
 		initialize();
 	}
 
-	/**
-	 * Initialize the contents of the frame.
-	 */
+
 	private void initialize() {
 		frmTimeline = new JFrame();
 		frmTimeline.setTitle("TIMELINE");
 		frmTimeline.getContentPane().setBackground(Color.WHITE);
 		frmTimeline.setBounds(700, 300, 450, 400);
-		frmTimeline.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frmTimeline.setDefaultCloseOperation(frmTimeline.DISPOSE_ON_CLOSE);
+		//frmTimeline.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmTimeline.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		frmTimeline.getContentPane().setLayout(new GridLayout(4, 1, 0, 0));
 		
 		panel_3 = new JPanel();

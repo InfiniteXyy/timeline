@@ -10,8 +10,8 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,7 +27,8 @@ public class Service {
 	private static String apiUrl = "http://timeline.infinitex.cn";
 	
 	public static List<Message> getAllMessages() throws JSONException {
-		String result = HttpUtil.sendGet(apiUrl + "/api/messages?limit=20");
+		String result = HttpUtil.sendGet(apiUrl + "/api/messages?limit=10");
+		
 		JSONObject jsonObj = new JSONObject(result);
 		JSONArray messages = new JSONArray(jsonObj.getString("messages"));
 		List <Message> messageList = new ArrayList<Message>();
@@ -42,12 +43,12 @@ public class Service {
 			String imageUrl = message.getString("imageUrl");
 			messageList.add(new Message(createdAt, id, body, updatedAt, authorObj.getString("image"), authorObj.getString("username"), imageUrl));
 		}
-		Collections.sort(messageList);
 		return messageList;
 	}
 	
 	public static List<Message> getMessagesFrom(int limit, String fromTime) throws JSONException {
-		String result = HttpUtil.sendGet(apiUrl + "/api/messages?limit=" + limit + "&from=" + fromTime);
+		String fromTime2 = URLEncoder.encode(fromTime);
+		String result = HttpUtil.sendGet(apiUrl + "/api/messages?limit=" + limit + "&from=" + fromTime2);
 		JSONObject jsonObj = new JSONObject(result);
 		JSONArray messages = new JSONArray(jsonObj.getString("messages"));
 		List <Message> messageList = new ArrayList<Message>();
@@ -62,7 +63,6 @@ public class Service {
 			String imageUrl = message.getString("imageUrl");
 			messageList.add(new Message(createdAt, id, body, updatedAt, authorObj.getString("image"), authorObj.getString("username"), imageUrl));
 		}
-		Collections.sort(messageList);
 		return messageList;
 	}
 	
@@ -111,7 +111,6 @@ public class Service {
 			userObj.put("password", user.getPassword());
 			param.put("user", userObj);
 		} catch (JSONException e) {
-
 			e.printStackTrace();
 		}
 		
@@ -122,7 +121,7 @@ public class Service {
 	public static boolean createMessage(User user, Message message) {
 		JSONObject param = new JSONObject();
 		JSONObject messageObj = new JSONObject();
-		Map<String, String> headers = new HashMap();
+		Map<String, String> headers = new HashMap<String, String>();
 		
 		try {
 			messageObj.put("body", message.getBody());

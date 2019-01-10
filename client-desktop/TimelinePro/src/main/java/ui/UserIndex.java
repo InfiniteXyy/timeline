@@ -3,6 +3,7 @@ package ui;
 import javax.swing.JFrame;
 import java.awt.GridBagLayout;
 import javax.swing.JPanel;
+import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import java.awt.GridBagConstraints;
 import javax.swing.JLabel;
@@ -15,12 +16,12 @@ import java.awt.Font;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.AdjustmentEvent;
+import java.awt.event.AdjustmentListener;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 import javax.swing.ScrollPaneConstants;
 import org.json.JSONException;
-
 import control.MainControl;
 import entity.Message;
 import service.Service;
@@ -33,83 +34,66 @@ public class UserIndex {
 	public JPanel panel = null;
 	public JPanel userPanel = null;
 	public JScrollPane scrollPane = null;
+	
 	public GridBagConstraints gbc_panel = null;
-	public Vector<MessagePanel> messageList = new Vector<MessagePanel>();
+	
 	public List<Message> messages = new ArrayList<Message>();
-	private List<MessagePanel> messagePanelList = new ArrayList();
-	public Thread loadHead = null;
-	public Thread loadImage = null;
+	private List<MessagePanel> messagePanelList = new ArrayList<MessagePanel>();
+	
 	public JButton releaseButton = null;
 	public JButton loginButton = null;
 	public JButton updateButton = null;
+	JButton moreMessageButton = null;
+	
 	public JButton logoutButton = null;
 	public JLabel headLebal = new JLabel();
-
-	/**
-	 * Launch the application.
-	 */
 
 	public static void main(String[] args) {
 		window = new UserIndex();
 		window.frame.setVisible(true);
 	}
 
-	/**
-	 * Create the application.
-	 */
 	public UserIndex() {
 		
-		 try { org.jb2011.lnf.beautyeye.BeautyEyeLNFHelper.launchBeautyEyeLNF(); }
+		try { org.jb2011.lnf.beautyeye.BeautyEyeLNFHelper.launchBeautyEyeLNF(); }
 		 catch(Exception e) {}
-		
+		 
 		initialize();
 	}
 
+	
 	public void updateMessage() {
 
 		panel.removeAll();
-	
-		 
-
+		messagePanelList.clear();
+		
 		try {
 			messages = Service.getAllMessages();
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		messagePanelList.clear();
+
 		for (int i = 0; i < messages.size(); i++) {
 			MessagePanel messagePanel = new MessagePanel(messages.get(i));
 			messagePanelList.add(messagePanel);
 			panel.add(messagePanel);
-	
 		}
-		panel.revalidate();
-		scrollPane.revalidate();
-
+		
 		new Thread(new Runnable() {
-
 			@Override
 			public void run() {
 				for (int i = 0; i < messages.size(); i++) {
 					messagePanelList.get(i).addImage(messages.get(i).getImageUrl());
-				}
-			}
-		}).start();
-		
-		new Thread(new Runnable() {
-			
-			@Override
-			public void run() {
-				for (int i = 0; i < messages.size(); i++) {
 					messagePanelList.get(i).addHeader(messages.get(i).getAuthor().getImage(), messages.get(i).getAuthor().getUsername());
 				}
+				frame.validate();
+				frame.repaint();
 			}
 		}).start();
-
 	}
 
 	private void initialize() {
+		
 		frame = new JFrame();
 		frame.getContentPane().setBackground(Color.GRAY);
 		frame.setBounds(700, 200, 450, 770);
@@ -157,7 +141,6 @@ public class UserIndex {
 
 		scrollPane = new JScrollPane(panel, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
 				ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-
 		scrollPane.setPreferredSize(new Dimension(350, 400));
 		scrollPane.getVerticalScrollBar().setUnitIncrement(20);
 
@@ -165,21 +148,27 @@ public class UserIndex {
 		gbc_panel.fill = GridBagConstraints.BOTH;
 		gbc_panel.gridx = 0;
 		gbc_panel.gridy = 1;
+		
 		frame.getContentPane().add(scrollPane, gbc_panel);
 		panel.setLayout(new GridLayout(0, 1, 0, 0));
 		
-		JButton moreMessageButton = new JButton("更多消息");
+		moreMessageButton = new JButton("更多消息");
 		GridBagConstraints gbc_moreMessageButton = new GridBagConstraints();
 		gbc_moreMessageButton.fill = GridBagConstraints.BOTH;
 		gbc_moreMessageButton.gridx = 0;
 		gbc_moreMessageButton.gridy = 2;
 		frame.getContentPane().add(moreMessageButton, gbc_moreMessageButton);
-
-		updateMessage();
 		
 		frame.validate();
 		frame.repaint();
 
+		initButtonListener();
+		updateMessage();
+		
+
+	}
+	
+	private void initButtonListener() {
 		releaseButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ReleaseWindow releaseWindow = new ReleaseWindow();
@@ -227,18 +216,17 @@ public class UserIndex {
 					messagePanelList.add(messagePanel);
 				}
 				new Thread(new Runnable() {
-					
 					@Override
 					public void run() {
 						for(int i = oldLength; i < messages.size(); i++) {
 							messagePanelList.get(i).addImage(messages.get(i).getImageUrl());
+							messagePanelList.get(i).addHeader(messages.get(i).getAuthor().getImage(), messages.get(i).getAuthor().getUsername());
 						}
-						
+						frame.validate();
+						frame.repaint();
 					}
 				}).start();
 			}
 		});	
-
 	}
-
 }
