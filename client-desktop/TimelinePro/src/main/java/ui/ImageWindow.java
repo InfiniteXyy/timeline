@@ -16,7 +16,12 @@ import java.awt.FlowLayout;
 
 public class ImageWindow {
 
-	public JFrame frame;
+	private static JFrame frame = new JFrame();
+	
+	public static JFrame getImageWindow(String url) {
+		initialize(url);
+		return frame;
+	}
 
 	public ImageWindow(String url) {
 		initialize(url);
@@ -25,8 +30,8 @@ public class ImageWindow {
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize(String url) {
-		frame = new JFrame();
+	private static void initialize(String url) {
+		//frame = new JFrame();
 		frame.getContentPane().setBackground(new Color(64, 64, 64));
 		frame.setBounds(700, 300, 500, 500);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -43,6 +48,7 @@ public class ImageWindow {
 		}
 		imageIcon.setImage(imageIcon.getImage().getScaledInstance((int)width, (int)height, Image.SCALE_DEFAULT));
 		JLabel imageLabel = new JLabel(imageIcon);
+		frame.getContentPane().removeAll();
 		frame.getContentPane().add(imageLabel);
 		frame.pack();
 	}

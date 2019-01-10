@@ -24,6 +24,7 @@ public class MessagePanel extends JPanel {
 	//URL imageUrl = null;
 	ImageIcon imageIcon = null;
 	ImageIcon headIcon = null;
+	private Message message;
 	
 	private JLabel usernameLabel = new JLabel();
 	GridBagConstraints gbc_lblNewLabel;
@@ -34,6 +35,7 @@ public class MessagePanel extends JPanel {
 	 */
 	public MessagePanel(Message message) {
 		//setBackground(Color.GRAY);
+		this.message = message;
 		GridBagLayout gridBagLayout = null;
 		
 		if(!message.getImageUrl().equals("")) {
@@ -104,13 +106,14 @@ public class MessagePanel extends JPanel {
 	}
 	
 	public void addHeader(String url, String username) {
-		if(url.equals("")) {
-			return;
+		if("".equals(url) || url == null) {
+			url = "https://timgsa.baidu.com/timg?image&quality=80&size=b10000_10000&sec=1545751609&di=c0da24651e2cc215e3c2ad9c8e3bbd77&src=http://img.mp.itc.cn/upload/20170507/b90675588adc4e4cbf09d109083bc42d_th.jpeg";
 		}
 		headIcon = Cache.getHeader(url, username);
 
 		headIcon.setImage(headIcon.getImage().getScaledInstance(45, 45,Image.SCALE_DEFAULT));
 		usernameLabel.setIcon(headIcon);
+		usernameLabel.setText(message.getAuthor().getUsername());
 		this.add(usernameLabel, gbc_lblNewLabel);
 		this.validate();
 		this.repaint();
@@ -120,7 +123,7 @@ public class MessagePanel extends JPanel {
 	public void addImage(String url) {
 		//if( imageLabel != null) this.remove(imageLabel);
 		
-		if(url.equals("")) return ;
+		if("".equals(url) || url == null || url == "null") return ;
 
 		imageIcon = Cache.getImageIcon(url);
 		
@@ -135,8 +138,9 @@ public class MessagePanel extends JPanel {
 		
 		imageLabel.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				ImageWindow imageWindow = new ImageWindow(url2);
-                imageWindow.frame.setVisible(true);
+				//ImageWindow imageWindow = new ImageWindow(url2);
+                //imageWindow.frame.setVisible(true);
+				ImageWindow.getImageWindow(url2).setVisible(true);
 			}
 		});
 		
