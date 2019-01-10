@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SimpleEncryptService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">timeline</a> &gt; <a href="index.source.html" class="el_package">com.ecnu.testcourse.timeline.service</a> &gt; <span class="el_source">SimpleEncryptService.java</span></div><h1>SimpleEncryptService.java</h1><pre class="source lang-java linenums">package com.ecnu.testcourse.timeline.service;
+
+import com.ecnu.testcourse.timeline.models.user.EncryptService;
+import com.ecnu.testcourse.timeline.utils.Encrypt;
+import java.nio.charset.StandardCharsets;
+import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.SecretKeySpec;
+import org.springframework.stereotype.Service;
+
+@Service
+<span class="fc" id="L11">public class SimpleEncryptService implements EncryptService {</span>
+
+<span class="fc" id="L13">  private String initVector = &quot;Bar12345Bar12345&quot;;</span>
+<span class="fc" id="L14">  private String key = &quot;Timelinexyyxyyxy&quot;;</span>
+<span class="fc" id="L15">  IvParameterSpec iv = new IvParameterSpec(initVector.getBytes(StandardCharsets.UTF_8));</span>
+<span class="fc" id="L16">  SecretKeySpec skeySpec = new SecretKeySpec(key.getBytes(StandardCharsets.UTF_8), &quot;AES&quot;);</span>
+
+  @Override
+  public String encrypt(String value) {
+<span class="fc" id="L20">    return Encrypt.encrypt(key, initVector, value);</span>
+  }
+
+
+  @Override
+  public boolean check(String checkPassword, String realPassword) {
+<span class="fc" id="L26">    return checkPassword.equals(Encrypt.decrypt(key, initVector, realPassword));</span>
+  }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

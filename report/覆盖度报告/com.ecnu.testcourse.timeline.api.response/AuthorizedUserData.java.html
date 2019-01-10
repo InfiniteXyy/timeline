@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AuthorizedUserData.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">timeline</a> &gt; <a href="index.source.html" class="el_package">com.ecnu.testcourse.timeline.api.response</a> &gt; <span class="el_source">AuthorizedUserData.java</span></div><h1>AuthorizedUserData.java</h1><pre class="source lang-java linenums">package com.ecnu.testcourse.timeline.api.response;
+
+import com.ecnu.testcourse.timeline.models.user.User;
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ * @author xuyiyang
+ */
+public class AuthorizedUserData {
+
+  private User user;
+  private String token;
+
+<span class="fc" id="L15">  public AuthorizedUserData(User user, String token) {</span>
+<span class="fc" id="L16">    this.user = user;</span>
+<span class="fc" id="L17">    this.token = token;</span>
+<span class="fc" id="L18">  }</span>
+
+  public Map&lt;String, Object&gt; getUserData() {
+<span class="fc" id="L21">    return new HashMap&lt;String, Object&gt;(16) {{</span>
+<span class="fc" id="L22">      put(&quot;user&quot;, new HashMap&lt;String, Object&gt;(16) {{</span>
+<span class="fc" id="L23">        put(&quot;email&quot;, user.getEmail());</span>
+<span class="fc" id="L24">        put(&quot;token&quot;, token);</span>
+<span class="fc" id="L25">        put(&quot;username&quot;, user.getUsername());</span>
+<span class="fc" id="L26">        put(&quot;image&quot;, user.getImage());</span>
+<span class="fc" id="L27">      }});</span>
+<span class="fc" id="L28">    }};</span>
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Encrypt.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">timeline</a> &gt; <a href="index.source.html" class="el_package">com.ecnu.testcourse.timeline.utils</a> &gt; <span class="el_source">Encrypt.java</span></div><h1>Encrypt.java</h1><pre class="source lang-java linenums">package com.ecnu.testcourse.timeline.utils;
+
+import java.nio.charset.StandardCharsets;
+import javax.crypto.Cipher;
+import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.SecretKeySpec;
+import org.apache.tomcat.util.codec.binary.Base64;
+
+/**
+ * @author xuyiyang
+ */
+<span class="nc" id="L12">public class Encrypt {</span>
+
+  public static String encrypt(String key, String initVector, String value) {
+    try {
+<span class="fc" id="L16">      IvParameterSpec iv = new IvParameterSpec(initVector.getBytes(&quot;UTF-8&quot;));</span>
+<span class="fc" id="L17">      SecretKeySpec skeySpec = new SecretKeySpec(key.getBytes(&quot;UTF-8&quot;), &quot;AES&quot;);</span>
+
+<span class="fc" id="L19">      Cipher cipher = Cipher.getInstance(&quot;AES/CBC/PKCS5PADDING&quot;);</span>
+<span class="fc" id="L20">      cipher.init(Cipher.ENCRYPT_MODE, skeySpec, iv);</span>
+
+<span class="fc" id="L22">      byte[] encrypted = cipher.doFinal(value.getBytes());</span>
+
+<span class="fc" id="L24">      return Base64.encodeBase64String(encrypted);</span>
+<span class="fc" id="L25">    } catch (Exception e) {</span>
+<span class="fc" id="L26">      return null;</span>
+    }
+  }
+
+  public static String decrypt(String key, String initVector, String encrypted) {
+    try {
+<span class="fc" id="L32">      IvParameterSpec iv = new IvParameterSpec(initVector.getBytes(StandardCharsets.UTF_8));</span>
+<span class="fc" id="L33">      SecretKeySpec skeySpec = new SecretKeySpec(key.getBytes(StandardCharsets.UTF_8), &quot;AES&quot;);</span>
+<span class="fc" id="L34">      Cipher cipher = Cipher.getInstance(&quot;AES/CBC/PKCS5PADDING&quot;);</span>
+<span class="fc" id="L35">      cipher.init(Cipher.DECRYPT_MODE, skeySpec, iv);</span>
+
+<span class="fc" id="L37">      byte[] original = cipher.doFinal(Base64.decodeBase64(encrypted));</span>
+
+<span class="fc" id="L39">      return new String(original);</span>
+<span class="fc" id="L40">    } catch (Exception e) {</span>
+<span class="fc" id="L41">      return null;</span>
+    }
+
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>
