@@ -77,8 +77,8 @@ public class Service {
 			e.printStackTrace();
 		}
 		
-		
 		JSONObject result = HttpUtil.sendPost(apiUrl + "/api/users/login", param);
+		//JSONObject result = HttpUtil.sendPostWithHeader(apiUrl + "/api/users/login", param, new HashMap<String, String>());
 		if(result == null) {
 			return null;
 		}
@@ -114,7 +114,7 @@ public class Service {
 			e.printStackTrace();
 		}
 		
-		JSONObject result = HttpUtil.sendPost(apiUrl + "/api/users", param);
+		JSONObject result = HttpUtil.sendPostWithHeader(apiUrl + "/api/users", param, new HashMap<String, String>());
 		return result == null ? false : true;
 	}
 	

@@ -17,7 +17,7 @@ import org.json.JSONObject;
 
 public class HttpUtil {
 	
-	private static final CloseableHttpClient httpclient = HttpClients.createDefault();
+	private static CloseableHttpClient httpclient = HttpClients.createDefault();
 	
 	public static String sendGet(String url) {
 
@@ -54,6 +54,8 @@ public class HttpUtil {
 	      s.setContentEncoding("UTF-8");
 	      s.setContentType("application/json;charset=UTF-8");//发送json数据需要设置contentType
 	      post.setEntity(s);
+
+	      httpclient = HttpClients.createDefault();
 	      HttpResponse res = httpclient.execute(post);
 	      if(res.getStatusLine().getStatusCode() == HttpStatus.SC_OK){
 	        //HttpEntity entity = res.getEntity();
@@ -61,7 +63,7 @@ public class HttpUtil {
 	        response = new JSONObject(result);
 	      }
 	    } catch (Exception e) {
-	      throw new RuntimeException(e);
+	    	e.printStackTrace();
 	    }
 	    return response;
 	  }
@@ -77,6 +79,7 @@ public class HttpUtil {
 	      s.setContentEncoding("utf-8");
 	      s.setContentType("application/json;charset=utf-8");//发送json数据需要设置contentType
 	      post.setEntity(s);
+	      httpclient = HttpClients.createDefault();
 	      HttpResponse res = httpclient.execute(post);
 	      if(res.getStatusLine().getStatusCode() == HttpStatus.SC_OK){
 	        //HttpEntity entity = res.getEntity();

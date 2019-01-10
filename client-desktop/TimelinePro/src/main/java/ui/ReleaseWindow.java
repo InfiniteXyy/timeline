@@ -140,8 +140,11 @@ public class ReleaseWindow {
 						return ;
 					}		
 				} catch (IOException e2) {
+
 					//JOptionPane.showMessageDialog(null, "?", "", JOptionPane.ERROR_MESSAGE);
-					JOptionPane.showMessageDialog(null, "?", "", JOptionPane.ERROR_MESSAGE);
+
+					JOptionPane.showMessageDialog(null, "文件格式错误", "", JOptionPane.ERROR_MESSAGE);
+
 					return ;
 				}
 				
@@ -198,7 +201,10 @@ public class ReleaseWindow {
 					JOptionPane.showMessageDialog(null, "未登录", "", JOptionPane.ERROR_MESSAGE);
 					return ;
 				}
-					
+				if(textArea.getText().equals("")) {
+					JOptionPane.showMessageDialog(null, "内容为空", "", JOptionPane.ERROR_MESSAGE);
+					return ;
+				}	
 				DateTime dt = new DateTime();
 				String createdAt = dt.toString();
 				Message message = new Message();
@@ -206,6 +212,7 @@ public class ReleaseWindow {
 				message.setCreatedAt(createdAt);
 				message.setBody(textArea.getText());
 				message.setUpdatedAt("");
+				
 				
 				new Thread(new Runnable() {
 					

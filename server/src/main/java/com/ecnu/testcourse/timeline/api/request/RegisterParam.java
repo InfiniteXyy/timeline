@@ -4,6 +4,9 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
+/**
+ * @author xuyiyang
+ */
 @JsonRootName("user")
 public class RegisterParam {
 

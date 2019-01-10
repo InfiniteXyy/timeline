@@ -3,7 +3,6 @@ package ui;
 import javax.swing.JFrame;
 import java.awt.GridBagLayout;
 import javax.swing.JPanel;
-import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import java.awt.GridBagConstraints;
 import javax.swing.JLabel;
@@ -16,8 +15,6 @@ import java.awt.Font;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.AdjustmentEvent;
-import java.awt.event.AdjustmentListener;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.ScrollPaneConstants;
@@ -55,9 +52,10 @@ public class UserIndex {
 
 	public UserIndex() {
 		
+		/*
 		try { org.jb2011.lnf.beautyeye.BeautyEyeLNFHelper.launchBeautyEyeLNF(); }
 		 catch(Exception e) {}
-		 
+		 */
 		initialize();
 	}
 

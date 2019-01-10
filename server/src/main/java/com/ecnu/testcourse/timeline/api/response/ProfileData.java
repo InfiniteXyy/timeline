@@ -4,6 +4,9 @@ import com.ecnu.testcourse.timeline.models.user.User;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * @author xuyiyang
+ */
 public class ProfileData {
 
   private User user;
@@ -13,8 +16,8 @@ public class ProfileData {
   }
 
   public Map<String, Object> getUserData() {
-    return new HashMap<String, Object>() {{
-      put("user", new HashMap<String, Object>() {{
+    return new HashMap<String, Object>(16) {{
+      put("user", new HashMap<String, Object>(16) {{
         put("username", user.getUsername());
         put("image", user.getImage());
       }});

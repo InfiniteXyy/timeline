@@ -10,6 +10,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
@@ -127,17 +128,29 @@ public class Login {
 				User user = new User();
 				user.setEmail(email.getText());	
 				user.setPassword(password.getText());
+				//System.out.println(user.getEmail().toString());
+				if(user.getEmail().equals("")) {
+					JOptionPane.showMessageDialog(null, "邮箱为空", "", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				if(user.getPassword().equals("")) {
+					JOptionPane.showMessageDialog(null, "密码为空", "", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+
 				User user2 = Service.login(user);
 				if(user2 == null) {
 					JOptionPane.showMessageDialog(null, "账号或密码错误", "", JOptionPane.ERROR_MESSAGE);
 				} else {
-					//System.out.println(user2.getToken());
 					MainControl.user = user2;
 					UserIndex.window.userPanel.remove(UserIndex.window.loginButton);
 					try {
-						headUrl = new URL(user2.getImage());
+						if(user2.getImage().equals("")) {
+							headUrl = new URL("https://timgsa.baidu.com/timg?image&quality=80&size=b10000_10000&sec=1545751609&di=c0da24651e2cc215e3c2ad9c8e3bbd77&src=http://img.mp.itc.cn/upload/20170507/b90675588adc4e4cbf09d109083bc42d_th.jpeg");
+						} else {
+							headUrl = new URL(user2.getImage());
+						}		
 					} catch (MalformedURLException e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
 					ImageIcon headIcon = new ImageIcon(headUrl);

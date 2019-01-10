@@ -7,10 +7,9 @@ import { promiseMiddleware, localStorageMiddleware } from './middleware';
 const getMiddleware = () => {
   if (process.env.NODE_ENV === 'production') {
     return applyMiddleware(promiseMiddleware, localStorageMiddleware);
-  } else {
-    // Enable additional logging in non-production environments.
-    return applyMiddleware(createLogger(), promiseMiddleware, localStorageMiddleware);
   }
+  // Enable additional logging in non-production environments.
+  return applyMiddleware(createLogger(), promiseMiddleware, localStorageMiddleware);
 };
 
-export const store = createStore(reducer, composeWithDevTools(getMiddleware()));
+export default createStore(reducer, composeWithDevTools(getMiddleware()));

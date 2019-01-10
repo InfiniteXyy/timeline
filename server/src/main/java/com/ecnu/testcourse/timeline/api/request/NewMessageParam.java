@@ -4,6 +4,9 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 import javax.validation.constraints.NotBlank;
 import org.hibernate.validator.constraints.URL;
 
+/**
+ * @author xuyiyang
+ */
 @JsonRootName("message")
 public class NewMessageParam {
 

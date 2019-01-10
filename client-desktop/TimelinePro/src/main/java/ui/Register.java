@@ -5,18 +5,23 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import java.awt.Font;
 import javax.swing.SwingConstants;
+import javax.swing.WindowConstants;
+
 import control.MainControl;
 import entity.User;
 import service.Service;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.JTextField;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -40,8 +45,11 @@ public class Register {
 		frame.setTitle("TIMELINE");
 		frame.getContentPane().setBackground(Color.WHITE);
 		//frame.setBounds(100, 100, 450, 300);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
 		frame.setDefaultCloseOperation(frame.DISPOSE_ON_CLOSE);
+
+		frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+
 		frame.getContentPane().setLayout(new GridLayout(0, 1, 0, 0));
 		
 		JPanel panel_5 = new JPanel();
@@ -137,14 +145,37 @@ public class Register {
 					JOptionPane.showMessageDialog(null, "两次密码不一致", "", JOptionPane.ERROR_MESSAGE);
 					return;
 				}
+				if(username.getText().equals("")) {
+					JOptionPane.showMessageDialog(null, "用户名为空", "", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				if(password.getText().equals("")) {
+					JOptionPane.showMessageDialog(null, "密码为空", "", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
 				
 				user.setEmail(email.getText());
 				user.setUsername(username.getText());
 				user.setPassword(password.getText());
+				
 				if(Service.register(user)) {
 					User user2 = Service.login(user);
 					MainControl.user = user2;
 					UserIndex.window.userPanel.remove(UserIndex.window.loginButton);
+					try {
+						if(user2.getImage().equals("")) {
+							headUrl = new URL("https://timgsa.baidu.com/timg?image&quality=80&size=b10000_10000&sec=1545751609&di=c0da24651e2cc215e3c2ad9c8e3bbd77&src=http://img.mp.itc.cn/upload/20170507/b90675588adc4e4cbf09d109083bc42d_th.jpeg");
+						} else {
+							headUrl = new URL(user2.getImage());
+						}		
+					} catch (MalformedURLException e1) {
+						e1.printStackTrace();
+					}
+					ImageIcon headIcon = new ImageIcon(headUrl);
+					headIcon.setImage(headIcon.getImage().getScaledInstance(45, 45,Image.SCALE_DEFAULT));
+					UserIndex.window.headLebal = new JLabel(headIcon);
+					UserIndex.window.userPanel.add(UserIndex.window.logoutButton);
+					UserIndex.window.userPanel.add(UserIndex.window.headLebal);
 					frame.dispose();
 				} else {
 					JOptionPane.showMessageDialog(null, "该邮箱已被注册", "", JOptionPane.ERROR_MESSAGE);

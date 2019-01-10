@@ -15,7 +15,6 @@ const defaultState = {
 export default (state = defaultState, action) => {
   switch (action.type) {
     case HOME_PAGE_LOADED:
-      console.log(action);
       return { ...state, messages: action.error ? null : action.payload.messages };
     case HOME_PAGE_UNLOADED:
       return {};
@@ -27,9 +26,15 @@ export default (state = defaultState, action) => {
     case ASYNC_END:
       return { ...state, inProgress: false };
     case ADD_MESSAGE:
-      return { ...state, messages: action.error ? null : [action.payload.message, ...state.messages] };
+      return {
+        ...state,
+        messages: action.error ? null : [action.payload.message, ...state.messages]
+      };
     case LOAD_MORE:
-      return { ...state, messages: action.error ? state.messages : [...state.messages, ...action.payload.messages] };
+      return {
+        ...state,
+        messages: action.error ? state.messages : [...state.messages, ...action.payload.messages]
+      };
     default:
       return state;
   }

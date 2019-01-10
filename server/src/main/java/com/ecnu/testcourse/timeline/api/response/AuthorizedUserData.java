@@ -4,6 +4,9 @@ import com.ecnu.testcourse.timeline.models.user.User;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * @author xuyiyang
+ */
 public class AuthorizedUserData {
 
   private User user;
@@ -15,8 +18,8 @@ public class AuthorizedUserData {
   }
 
   public Map<String, Object> getUserData() {
-    return new HashMap<String, Object>() {{
-      put("user", new HashMap<String, Object>() {{
+    return new HashMap<String, Object>(16) {{
+      put("user", new HashMap<String, Object>(16) {{
         put("email", user.getEmail());
         put("token", token);
         put("username", user.getUsername());
