@@ -18,17 +18,36 @@
     "redux": "^4.0.1",
     "redux-devtools-extension": "^2.13.5",
     "redux-logger": "^3.0.6",
+    "source-map-explorer": "^1.6.0",
     "superagent": "^4.0.0",
     "superagent-promise": "^1.1.0"
   },
   "scripts": {
+    "analyze": "source-map-explorer build/static/js/main.*",
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "GENERATE_SOURCEMAP=false react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
-    "extends": "react-app"
+    "extends": [
+      "airbnb",
+      "prettier"
+    ],
+    "globals": {
+      "FormData": true,
+      "File": true,
+      "window": true,
+      "document": true,
+      "alert": true
+    },
+    "rules": {
+
+      "no-alert": "off",
+      "no-param-reassign": "off",
+      "react/forbid-prop-types": "off",
+      "react/require-default-props": "off"
+    }
   },
   "browserslist": [
     ">0.2%",
@@ -37,7 +56,10 @@
     "not op_mini all"
   ],
   "devDependencies": {
+    "@types/prop-types": "^15.5.8",
     "@types/react-router-dom": "^4.3.1",
-    "@types/superagent": "^3.8.4"
+    "@types/superagent": "^3.8.4",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-config-prettier": "^3.3.0"
   }
 }

@@ -12,7 +12,7 @@ export default (state = {}, action) => {
       return {
         ...state,
         token: action.error ? null : action.payload.user.token,
-        currentUser: action.error ? null : action.payload.user,
+        currentUser: action.error ? null : action.payload.user
       };
     case LOGOUT:
       return { ...state, token: null, currentUser: null };

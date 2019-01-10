@@ -1,8 +1,8 @@
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import React from 'react';
-import { store } from './store';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import store from './store';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'moment/locale/zh-cn';
 

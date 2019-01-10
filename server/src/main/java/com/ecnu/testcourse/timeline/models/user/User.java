@@ -5,6 +5,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+/**
+ * @author xuyiyang
+ */
 @Entity
 public class User {
 
@@ -32,6 +35,10 @@ public class User {
     return id;
   }
 
+  public void setId(long id) {
+    this.id = id;
+  }
+
   public String getEmail() {
     return email;
   }
@@ -49,16 +56,16 @@ public class User {
   }
 
   public void update(String email, String username, String password, String image) {
-    if (!email.equals("")) {
+    if (!"".equals(email)) {
       this.email = email;
     }
-    if (!username.equals("")) {
+    if (!"".equals(username)) {
       this.username = username;
     }
-    if (!password.equals("")) {
+    if (!"".equals(password)) {
       this.password = password;
     }
-    if (!image.equals("")) {
+    if (!"".equals(image)) {
       this.image = image;
     }
   }

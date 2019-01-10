@@ -1,6 +1,9 @@
 import agent from './agent';
-import { ASYNC_START, ASYNC_END, LOGIN, LOGOUT, REGISTER } from './constants/actionTypes';
+import { ASYNC_END, ASYNC_START, LOGIN, LOGOUT, REGISTER } from './constants/actionTypes';
 
+function isPromise(v) {
+  return v && typeof v.then === 'function';
+}
 const promiseMiddleware = store => next => action => {
   // 如果是Promise请求，就调用then方法，并且状态变为正在同步
   if (isPromise(action.payload)) {
@@ -8,13 +11,11 @@ const promiseMiddleware = store => next => action => {
 
     action.payload.then(
       res => {
-        console.log('RESULT', res);
         action.payload = res;
         store.dispatch({ type: ASYNC_END, promise: action.payload });
         store.dispatch(action);
       },
       error => {
-        console.log('ERROR', error);
         action.error = true;
         action.payload = error.response.body;
         store.dispatch({ type: ASYNC_END, promise: action.payload });
@@ -27,7 +28,7 @@ const promiseMiddleware = store => next => action => {
   next(action);
 };
 
-const localStorageMiddleware = store => next => action => {
+const localStorageMiddleware = () => next => action => {
   if (action.type === REGISTER || action.type === LOGIN) {
     if (!action.error) {
       window.localStorage.setItem('jwt', action.payload.user.token);
@@ -40,9 +41,5 @@ const localStorageMiddleware = store => next => action => {
 
   next(action);
 };
-
-function isPromise(v) {
-  return v && typeof v.then === 'function';
-}
 
 export { promiseMiddleware, localStorageMiddleware };

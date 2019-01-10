@@ -3,6 +3,7 @@ package com.ecnu.testcourse.timeline.api;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
@@ -12,10 +13,10 @@ import com.ecnu.testcourse.timeline.models.user.User;
 import com.ecnu.testcourse.timeline.models.user.UserRepository;
 import com.ecnu.testcourse.timeline.service.Auth;
 import io.restassured.module.mockmvc.RestAssuredMockMvc;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -53,7 +54,8 @@ public class MessageApiTest {
     when(messageRepository.findTopMessages(anyInt())).thenReturn(Collections.singletonList(
         new Message("haha", "", demoUser.getId())
     ));
-    when(userRepository.findById(demoUser.getId())).thenReturn(Optional.of(demoUser));
+    when(userRepository.findByIdIn(Collections.singletonList(demoUser.getId()))).thenReturn(
+        Collections.singletonList(demoUser));
 
     RestAssuredMockMvc.when()
         .get("/api/messages")
@@ -70,14 +72,45 @@ public class MessageApiTest {
     when(messageRepository.findTopMessages(limit)).thenReturn(Collections.nCopies(limit,
         new Message("haha", "", demoUser.getId())
     ));
-    when(userRepository.findById(demoUser.getId())).thenReturn(Optional.of(demoUser));
-
+    when(userRepository.findByIdIn(anyList())).thenReturn(
+        Collections.singletonList(demoUser));
     RestAssuredMockMvc.when()
         .get("/api/messages?limit={limit}", limit)
         .prettyPeek()
         .then()
         .statusCode(200)
         .body("messages.size()", is(limit));
+  }
+
+
+  @Test
+  public void should_get_message_with_different_author() throws Exception {
+    User user1 = new User("x@x.x", "x", "x", "");
+    User user2 = new User("y@y.y", "y", "y", "");
+    user1.setId(1L);
+    user2.setId(2L);
+
+    when(messageRepository.findTopMessages(anyInt())).thenReturn(
+        Arrays.asList(
+            new Message("x message", "", user1.getId()),
+            new Message("y message", "", user2.getId()),
+            new Message("z message", "", 3)
+        )
+    );
+
+    when(userRepository.findByIdIn(anyList())).thenReturn(
+        Arrays.asList(
+            user1, user2
+        )
+    );
+
+    RestAssuredMockMvc.when()
+        .get("/api/messages")
+        .prettyPeek()
+        .then()
+        .statusCode(200)
+        .body("messages.size()", is(2))
+        .body("messages[1].author.username", is("y"));
   }
 
   @Test
@@ -87,8 +120,8 @@ public class MessageApiTest {
         .thenReturn(Collections.singletonList(
             new Message("haha", "", demoUser.getId())
         ));
-    when(userRepository.findById(demoUser.getId())).thenReturn(Optional.of(demoUser));
-
+    when(userRepository.findByIdIn(Collections.singletonList(demoUser.getId()))).thenReturn(
+        Collections.singletonList(demoUser));
     RestAssuredMockMvc.when()
         .get("/api/messages?from={offset}", offset)
         .prettyPeek()
